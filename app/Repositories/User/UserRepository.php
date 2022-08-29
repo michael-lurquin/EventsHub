@@ -7,18 +7,9 @@ use Illuminate\Support\Facades\Hash;
 
 class UserRepository
 {
-    protected $user;
-
-    public function __construct(User $user)
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
     public function create(array $data) : User
     {
-        return $this->user->create([
+        return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
@@ -27,26 +18,26 @@ class UserRepository
 
     public function find(int $userId) : User
     {
-        return $this->user->findOrFail($userId);
+        return User::findOrFail($userId);
     }
 
-    public function update(array $data) : void
+    public function update(User $user, array $data) : void
     {
-        $this->user->updateOrFail($data);
+        $user->updateOrFail($data);
     }
 
-    public function delete() : void
+    public function delete(User $user) : void
     {
-        $this->user->deleteOrFail();
+        $user->deleteOrFail();
     }
 
-    public function deleteForce() : void
+    public function deleteForce(User $user) : void
     {
-        $this->user->forceDelete();
+        $user->forceDelete();
     }
 
-    public function restore() : void
+    public function restore(User $user) : void
     {
-        $this->user->restore();
+        $user->restore();
     }
 }

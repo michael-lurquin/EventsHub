@@ -12,12 +12,14 @@ class UserTest extends TestCase
     use RefreshDatabase;
 
     protected User $user;
+    protected UserRepository $repository;
 
     public function setUp() : void
     {
         parent::setUp();
 
         $this->user = User::factory()->create();
+        $this->repository = new UserRepository();
     }
 
     /**
@@ -33,7 +35,7 @@ class UserTest extends TestCase
             'password' => 'password',
         ];
 
-        $user = (new UserRepository(new User))->create($data);
+        $user = $this->repository->create($data);
 
         $this->assertInstanceOf(User::class, $user);
         $this->assertModelExists($user);
@@ -46,10 +48,10 @@ class UserTest extends TestCase
      */
     public function testFindUser()
     {
-        $user = (new UserRepository(new User))->find($this->user->id);
+        $this->repository->find($this->user->id);
 
-        $this->assertInstanceOf(User::class, $user);
-        $this->assertModelExists($user);
+        $this->assertInstanceOf(User::class, $this->user);
+        $this->assertModelExists($this->user);
     }
 
     /**
@@ -61,7 +63,7 @@ class UserTest extends TestCase
     {
         $data['name'] = 'John Doe';
 
-        (new UserRepository($this->user))->update($data);
+        $this->repository->update($this->user, $data);
 
         $this->assertEquals($data['name'], $this->user->name);
     }
@@ -73,7 +75,7 @@ class UserTest extends TestCase
      */
     public function testDeleteUser()
     {
-        (new UserRepository($this->user))->delete();
+        $this->repository->delete($this->user);
 
         $this->assertSoftDeleted('users', ['id' => $this->user->id]);
     }
@@ -85,7 +87,7 @@ class UserTest extends TestCase
      */
     public function testDeleteForceUser()
     {
-        (new UserRepository($this->user))->deleteForce();
+        $this->repository->deleteForce($this->user);
 
         $this->assertModelMissing($this->user);
     }
@@ -97,7 +99,7 @@ class UserTest extends TestCase
      */
     public function testRestoreUser()
     {
-        (new UserRepository($this->user))->restore();
+        $this->repository->restore($this->user);
 
         $this->assertNotSoftDeleted($this->user);
     }
