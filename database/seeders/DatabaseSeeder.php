@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Repositories\Tenant\TenantRepository;
+use App\Repositories\User\UserRepository;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -14,11 +16,25 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        // Default Tenant and User
+        $tenantRepository = new TenantRepository();
+        $userRepository = new UserRepository();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        $user = $userRepository->create([
+            'name' => 'Michaël Lurquin',
+            'email' => 'michael.l@learnence.com',
+            'password' => 'password',
+        ]);
+
+        $tenant = $tenantRepository->create([
+            'name' => 'Learnence',
+            'email' => 'info@learnence.com',
+            'subdomain' => 'learnence',
+            'owner_id' => $user->id,
+        ]);
+
+        $tenantRepository->addUser($tenant, $user);
+
+        $userRepository->changeTenant($user, $tenant);
     }
 }

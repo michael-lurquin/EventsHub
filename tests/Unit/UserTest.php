@@ -4,13 +4,13 @@ namespace Tests\Unit;
 
 use Tests\TestCase;
 use App\Models\User;
+use App\Models\Tenant;
+use App\Notifications\UserInvitation;
 use App\Repositories\User\UserRepository;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Notification;
 
 class UserTest extends TestCase
 {
-    use RefreshDatabase;
-
     protected User $user;
     protected UserRepository $repository;
 
@@ -24,16 +24,11 @@ class UserTest extends TestCase
 
     /**
      * Création d'un utilisateur
-     *
-     * @return User
      */
     public function testCreateUser()
     {
-        $data = [
-            'name' => fake()->name,
-            'email' => fake()->safeEmail,
-            'password' => 'password',
-        ];
+        $data = User::factory()->make()->toArray();
+        $data['password'] = 'password';
 
         $user = $this->repository->create($data);
 
@@ -42,22 +37,7 @@ class UserTest extends TestCase
     }
 
     /**
-     * Récupération d'un utilisateur
-     *
-     * @return User
-     */
-    public function testFindUser()
-    {
-        $this->repository->find($this->user->id);
-
-        $this->assertInstanceOf(User::class, $this->user);
-        $this->assertModelExists($this->user);
-    }
-
-    /**
-     * Modifiation d'un utilisateur
-     *
-     * @return User
+     * Modification d'un utilisateur
      */
     public function testEditUser()
     {
@@ -70,8 +50,6 @@ class UserTest extends TestCase
 
     /**
      * Suppression d'un utilisateur
-     *
-     * @return User
      */
     public function testDeleteUser()
     {
@@ -82,8 +60,6 @@ class UserTest extends TestCase
 
     /**
      * Suppression forcée d'un utilisateur
-     *
-     * @return User
      */
     public function testDeleteForceUser()
     {
@@ -94,13 +70,41 @@ class UserTest extends TestCase
 
     /**
      * Restauration d'un utilisateur
-     *
-     * @return User
      */
     public function testRestoreUser()
     {
         $this->repository->restore($this->user);
 
         $this->assertNotSoftDeleted($this->user);
+    }
+
+    /**
+     * Modification du tenant actuel de l'utilisateur
+     */
+    public function testChangeTenant()
+    {
+        $tenants = Tenant::factory()->count(2)->state([
+            'owner_id' => $this->user,
+        ])->create();
+
+        $this->repository->changeTenant($this->user, $tenants[0]);
+
+        $this->assertEquals($tenants[0]->id, $this->user->current_tenant_id);
+
+        $this->repository->changeTenant($this->user, $tenants[1]);
+
+        $this->assertEquals($tenants[1]->id, $this->user->current_tenant_id);
+    }
+
+    /**
+     * Envoi d'un mail d'invitation lors de la création d'un utilisateur
+     */
+    public function testNotificationSentWhenUserCreated()
+    {
+        Notification::fake();
+
+        $this->repository->sendInvitation($this->user);
+
+        Notification::assertSentTo($this->user, UserInvitation::class);
     }
 }

@@ -3,22 +3,21 @@
 namespace App\Repositories\User;
 
 use App\Models\User;
+use App\Models\Tenant;
 use Illuminate\Support\Facades\Hash;
+use App\Notifications\UserInvitation;
 
 class UserRepository
 {
-    public function create(array $data) : User
+    public function create(array $data, bool $notification = false) : User
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
-    }
+        if ( !empty($data['password']) ) $data['password'] = Hash::make($data['password']);
 
-    public function find(int $userId) : User
-    {
-        return User::findOrFail($userId);
+        $user = User::create($data);
+
+        if ( $notification ) $this->sendInvitation($user);
+
+        return $user;
     }
 
     public function update(User $user, array $data) : void
@@ -39,5 +38,17 @@ class UserRepository
     public function restore(User $user) : void
     {
         $user->restore();
+    }
+
+    public function changeTenant(User $user, Tenant $tenant)
+    {
+        $user->updateOrFail(['current_tenant_id' => $tenant->id]);
+    }
+
+    public function sendInvitation(User $user)
+    {
+        // $url = URL::signedRoute('users.invitation', $user);
+
+        $user->notify(new UserInvitation($user, 'fake-url'));
     }
 }

@@ -13,16 +13,19 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('tenants', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
-            $table->foreignId('current_tenant_id')->nullable()->constrained('tenants');
+            $table->string('email');
+            $table->string('subdomain');
+            $table->foreignId('owner_id')->constrained('users');
             $table->timestamps();
             $table->softDeletes();
+        });
+
+        Schema::create('tenant_user', function (Blueprint $table) {
+            $table->foreignId('tenant_id')->constrained();
+            $table->foreignId('user_id')->constrained();
         });
     }
 
@@ -33,6 +36,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('tenant_user');
+        Schema::dropIfExists('tenants');
     }
 };
