@@ -1,5 +1,7 @@
 @extends('admin.layouts.app')
 
+@section('title', 'Dashboard')
+
 @section('content')
     <h1 class="text-3xl font-bold leading-tight tracking-tight text-gray-700">{{ auth()->user()->currentTenant->name }} Dashboard</h1>
     <p class="mt-1 text-base font-medium text-gray-500">Welcome back, {{ auth()->user()->name }}</p>
