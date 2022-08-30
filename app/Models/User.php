@@ -50,7 +50,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany(Tenant::class);
     }
 
-    public function current_tenant() : BelongsTo
+    public function currentTenant() : BelongsTo
     {
         return $this->belongsTo(Tenant::class, 'current_tenant_id');
     }

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email');
-            $table->string('subdomain');
+            $table->string('subdomain')->unique();
             $table->foreignId('owner_id')->constrained('users');
             $table->timestamps();
             $table->softDeletes();
@@ -26,6 +26,10 @@ return new class extends Migration
         Schema::create('tenant_user', function (Blueprint $table) {
             $table->foreignId('tenant_id')->constrained();
             $table->foreignId('user_id')->constrained();
+        });
+
+        Schema::table('users', function (Blueprint $table) {
+            $table->foreignId('current_tenant_id')->after('remember_token')->nullable()->constrained('tenants');
         });
     }
 

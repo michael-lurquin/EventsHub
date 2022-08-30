@@ -26,6 +26,8 @@ class DatabaseSeeder extends Seeder
             'password' => 'password',
         ]);
 
+        $user->markEmailAsVerified();
+
         $tenant = $tenantRepository->create([
             'name' => 'Learnence',
             'email' => 'info@learnence.com',
