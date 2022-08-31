@@ -15,7 +15,7 @@
     </head>
 
     <body class="antialiased font-sans text-sm bg-gray-50 text-gray-600 overflow-hidden h-full">
-        <div class="min-h-full">
+        <div class="min-h-full" x-data="{ selected: [] }">
             <div class="bg-gray-800 pb-32 px-4">
                 <nav class="bg-gray-800" x-data="{ open: false }">
                     <!-- Desktop -->
@@ -27,7 +27,7 @@
                                         <img class="h-8 w-8" src="https://tailwindui.com/img/logos/workflow-mark.svg?color=indigo&shade=500" alt="Workflow">
                                     </div>
                                     <div class="hidden lg:block">
-                                        <div class="ml-10 flex items-baseline space-x-4">
+                                        <div class="ml-10 flex justify-center items-center space-x-4">
                                             @includeIf('admin.layouts.nav', ['mobile' => false])
                                         </div>
                                     </div>
@@ -53,7 +53,7 @@
                                                     x-on:click="profile = !profile"
                                                 >
                                                     <span class="sr-only">Open user menu</span>
-                                                    <img class="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+                                                    <img class="h-8 w-8 rounded-full" src="{{ !empty(auth()->user()->photo_url) ? auth()->user()->photo_url : 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80' }}" alt="">
                                                 </button>
                                             </div>
                                             <div 
@@ -105,7 +105,7 @@
                         <div class="border-t border-gray-700 pt-4 pb-3">
                             <div class="flex items-center px-5">
                                 <div class="flex-shrink-0">
-                                    <img class="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+                                    <img class="h-10 w-10 rounded-full" src="{{ !empty(auth()->user()->photo_url) ? auth()->user()->photo_url : 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80' }}" alt="">
                                 </div>
                                 <div class="ml-3">
                                     <div class="text-base font-medium leading-none text-white">{{ auth()->user()->name }}</div>
@@ -126,16 +126,68 @@
                 </nav>
                 <header class="py-10">
                     <div class="mx-auto container">
-                        <h1 class="text-3xl font-bold tracking-tight text-white">@yield('title')</h1>
+                        @if ( isset($breadcrumbs) )
+                            <div>
+                                <nav class="sm:hidden" aria-label="Back">
+                                    <a href="{{ back() }}" class="flex items-center text-sm font-medium text-gray-400 hover:text-gray-200">
+                                        <svg class="-ml-1 mr-1 h-5 w-5 flex-shrink-0 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                            <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+                                        </svg>
+                                        Back
+                                    </a>
+                                </nav>
+                                <nav class="hidden sm:flex" aria-label="Breadcrumb">
+                                    <ol role="list" class="flex items-center space-x-2">
+                                        <li>
+                                            <div class="flex">
+                                                <a href="{{ route('admin.dashboard') }}" class="text-sm font-medium text-gray-400 hover:text-gray-200">Dashboard</a>
+                                            </div>
+                                        </li>
+                                        @foreach($breadcrumbs as $breadcrumb)
+                                            <li>
+                                                <div class="flex items-center">
+                                                    <svg class="h-5 w-5 flex-shrink-0 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                        <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                                                    </svg>
+                                                    <a href="{{ $breadcrumb['link'] }}" class="ml-4 text-sm font-medium text-gray-400 hover:text-gray-200">{{ $breadcrumb['title'] }}</a>
+                                                </div>
+                                            </li>
+                                        @endforeach
+                                    </ol>
+                                </nav>
+                            </div>
+                        @endif
+                        <div class="mt-2 md:flex md:items-center md:justify-between">
+                            <div class="min-w-0 flex-1">
+                                <h2 class="text-2xl font-bold leading-7 text-white sm:truncate sm:text-3xl sm:tracking-tight">@yield('title')</h2>
+                            </div>
+                            @if ( !empty($actions) )
+                                <div class="mt-4 flex flex-shrink-0 md:mt-0 md:ml-4">
+                                    @includeWhen(!empty($bulkAction), 'admin.layouts.bulk-action')
+
+                                    @foreach($actions as $action)
+                                        <a
+                                            href="{{ $action['link'] }}" 
+                                            class="{{ !$loop->first ? 'ml-3' : '' }} {{ $action['primary'] ? 'bg-indigo-500 hover:bg-indigo-600 focus:ring-indigo-500' : 'bg-gray-600 hover:bg-gray-700 focus:ring-gray-500' }} inline-flex items-center rounded-md border border-transparent px-4 py-2 text-sm font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800"
+                                        >
+                                            @if ( !empty($action['icon']) )
+                                                <svg class="-ml-1 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                    {!! $action['icon'] !!}
+                                                </svg>
+                                            @endif
+                                            {{ $action['title'] }}
+                                        </a>
+                                    @endforeach
+                                </div>
+                            @endif
+                        </div>
                     </div>
                 </header>
             </div>
 
             <main class="-mt-32 px-4">
                 <div class="mx-auto container pb-12">
-                    <div class="rounded-lg bg-white px-5 py-6 shadow sm:px-6">
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. A et blanditiis enim natus voluptatibus molestiae, incidunt dolores corrupti debitis commodi beatae culpa labore in vel. Eaque dolor nisi tempora inventore!</p>
-                    </div>
+                    @yield('content')
                 </div>
             </main>
         </div>

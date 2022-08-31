@@ -5,9 +5,17 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Tenant;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Repositories\Tenant\TenantRepository;
 
 class TenantController extends Controller
 {
+    private TenantRepository $repository;
+
+    public function __construct(TenantRepository $repository)
+    {
+        $this->repository = $repository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +23,9 @@ class TenantController extends Controller
      */
     public function index()
     {
-        //
+        $tenants = $this->repository->getAll();
+
+        return view('admin.tenants.index', compact('tenants'));
     }
 
     /**
@@ -25,7 +35,7 @@ class TenantController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.tenants.create');
     }
 
     /**
@@ -36,7 +46,7 @@ class TenantController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request->all());
     }
 
     /**
@@ -47,7 +57,7 @@ class TenantController extends Controller
      */
     public function show(Tenant $tenant)
     {
-        //
+        dd($tenant);
     }
 
     /**
@@ -56,9 +66,11 @@ class TenantController extends Controller
      * @param  \App\Models\Tenant  $tenant
      * @return \Illuminate\Http\Response
      */
-    public function edit()
+    public function edit(Tenant $tenant)
     {
-        //
+        dd($tenant);
+
+        return view('admin.tenants.edit', compact('tenant'));
     }
 
     /**
@@ -70,7 +82,7 @@ class TenantController extends Controller
      */
     public function update(Request $request, Tenant $tenant)
     {
-        //
+        dd($request->all());
     }
 
     /**
@@ -81,6 +93,6 @@ class TenantController extends Controller
      */
     public function destroy(Tenant $tenant)
     {
-        //
+        dd($tenant);
     }
 }

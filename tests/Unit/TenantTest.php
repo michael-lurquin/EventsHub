@@ -11,8 +11,8 @@ use App\Repositories\Tenant\TenantRepository;
 
 class TenantTest extends TestCase
 {
-    protected Tenant $tenant;
-    protected TenantRepository $repository;
+    private Tenant $tenant;
+    private TenantRepository $repository;
 
     public function setUp() : void
     {

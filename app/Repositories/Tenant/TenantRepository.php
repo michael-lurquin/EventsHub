@@ -5,9 +5,15 @@ namespace App\Repositories\Tenant;
 use App\Models\User;
 use App\Models\Tenant;
 use App\Notifications\TenantInvitation;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class TenantRepository
 {
+    public function getAll() : LengthAwarePaginator
+    {
+        return Tenant::with('owner')->withCount('users')->orderByDesc('created_at')->paginate(10);
+    }
+
     public function create(array $data, bool $notification = false) : Tenant
     {
         $tenant = Tenant::create($data);

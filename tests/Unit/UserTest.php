@@ -11,8 +11,8 @@ use Illuminate\Support\Facades\Notification;
 
 class UserTest extends TestCase
 {
-    protected User $user;
-    protected UserRepository $repository;
+    private User $user;
+    private UserRepository $repository;
 
     public function setUp() : void
     {

@@ -38,5 +38,10 @@ class DatabaseSeeder extends Seeder
         $tenantRepository->addUser($tenant, $user);
 
         $userRepository->changeTenant($user, $tenant);
+
+        // For test
+        \App\Models\Tenant::factory()->state([
+            'owner_id' => $user->id,
+        ])->count(25)->create();
     }
 }

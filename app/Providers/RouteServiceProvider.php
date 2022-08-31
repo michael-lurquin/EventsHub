@@ -40,6 +40,10 @@ class RouteServiceProvider extends ServiceProvider
                 ->prefix('admin')
                 ->name('admin.')
                 ->group(base_path('routes/admin.php'));
+
+            Route::middleware(['web'])
+                ->domain('{tenant}' . config('session.domain'))
+                ->group(base_path('routes/event.php'));
         });
     }
 

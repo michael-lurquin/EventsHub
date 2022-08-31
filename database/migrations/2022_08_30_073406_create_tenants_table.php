@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('email');
             $table->string('subdomain')->unique();
             $table->foreignId('owner_id')->constrained('users');
+            $table->date('ends_at')->nullable();
+            $table->string('logo_url')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

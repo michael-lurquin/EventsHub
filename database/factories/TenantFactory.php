@@ -23,6 +23,7 @@ class TenantFactory extends Factory
             'name' => $company,
             'email' => fake()->safeEmail(),
             'subdomain' => Str::slug($company),
+            'ends_at' => fake()->dateTimeBetween('-30 days', '+1 years')->format('Y-m-d'),
         ];
     }
 }

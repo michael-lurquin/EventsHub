@@ -8,12 +8,21 @@ module.exports = {
 		"./resources/**/*.js",
 		"./resources/**/*.vue",
 	],
-	theme: {
-		extend: {
-			colors: {
-				violet: colors.violet
-			},
+	safelist: [
+		{
+			pattern: /text-(teal|purple|sky|yellow)-700/,
 		},
+		{
+			pattern: /bg-(teal|purple|sky|yellow)-(50|600|700)/,
+			variants: ['hover'],
+		}
+	],
+	theme: {
+		extend: {},
 	},
-	plugins: [],
+	plugins: [
+		require('@tailwindcss/typography'),
+		require('@tailwindcss/forms'),
+		require('@tailwindcss/aspect-ratio'),
+	],
 }

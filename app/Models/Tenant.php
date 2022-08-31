@@ -18,6 +18,16 @@ class Tenant extends Model
         'email',
         'subdomain',
         'owner_id',
+        'ends_at',
+        'logo_url',
+    ];
+
+    protected $casts = [
+        'active' => 'boolean',
+    ];
+
+    protected $dates = [
+        'ends_at',
     ];
 
     public function owner() : BelongsTo
@@ -28,5 +38,10 @@ class Tenant extends Model
     public function users() : BelongsToMany
     {
         return $this->belongsToMany(User::class);
+    }
+
+    public function isExceeded()
+    {
+        return !empty($this->ends_at) ? !$this->ends_at->isToday() && $this->ends_at->isPast() : false;
     }
 }
