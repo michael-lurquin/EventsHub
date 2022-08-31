@@ -49,7 +49,7 @@
                             </thead>
                             <tbody class="divide-y divide-gray-200 bg-white">
                                 @foreach($tenants as $tenant)
-                                    <tr class="even:bg-gray-50 hover:bg-gray-100" :class="selected.length > 0 ? 'bg-gray-50' : ''">
+                                    <tr :class="selected.includes({{ $tenant->id }}) ? 'bg-indigo-50 hover:bg-indigo-100' : 'even:bg-gray-50 hover:bg-gray-100'">
                                         <td class="relative w-12 px-6 sm:w-16 sm:px-8">
                                             <div class="absolute inset-y-0 left-0 w-0.5 bg-indigo-600" x-show="selected.includes({{ $tenant->id }})"></div>
                                             <input 
