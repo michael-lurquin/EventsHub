@@ -15,7 +15,7 @@
                 <div class="mx-auto w-full max-w-sm lg:w-96">
                     <div>
                         <img class="h-12 w-auto" src="https://tailwindui.com/img/logos/workflow-mark.svg?color=indigo&shade=600" alt="Workflow">
-                        <h2 class="mt-6 text-3xl font-bold tracking-tight text-gray-900">Sign in to your account</h2>
+                        <h2 class="mt-6 text-3xl font-bold tracking-tight text-gray-700">Sign in to your account</h2>
                     </div>
 
                     <div class="mt-8">

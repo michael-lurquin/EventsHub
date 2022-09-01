@@ -19,13 +19,24 @@ class DashboardTest extends TestCase
     }
 
     /**
-     * See dashboard page
+     * See Login page
+     */
+    public function testSeeLogin()
+    {
+        $response = $this->get(route('login'));
+
+        $response->assertSuccessful();
+        $response->assertSee('Sign in to your account');
+    }
+
+    /**
+     * See Dashboard page
      */
     public function testSeeDashboard()
     {
         $response = $this->actingAs($this->auth)->get(route('admin.dashboard'));
 
-        $response->assertStatus(200);
+        $response->assertSuccessful();
         $response->assertSee('Dashboard');
     }
 }
