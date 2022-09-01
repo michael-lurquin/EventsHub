@@ -7,7 +7,6 @@ use Laravel\Fortify\Fortify;
 // use App\Actions\Fortify\CreateNewUser;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Cache\RateLimiting\Limit;
-use Opcodes\LogViewer\Facades\LogViewer;
 use App\Actions\Fortify\ResetUserPassword;
 use App\Actions\Fortify\UpdateUserPassword;
 use Illuminate\Support\Facades\RateLimiter;
@@ -32,13 +31,6 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->fortifyFeatures();
-
-        $this->logsViewer();
-    }
-
-    private function fortifyFeatures()
-    {
         Fortify::loginView(function () {
             return view('admin.auth.login');
         });
@@ -56,15 +48,6 @@ class FortifyServiceProvider extends ServiceProvider
 
         RateLimiter::for('two-factor', function (Request $request) {
             return Limit::perMinute(5)->by($request->session()->get('login.id'));
-        });
-    }
-
-    private function logsViewer()
-    {
-        LogViewer::auth(function ($request) {
-            return $request->user() && in_array($request->user()->email, [
-                'michael.l@learnence.com',
-            ]);
         });
     }
 }
