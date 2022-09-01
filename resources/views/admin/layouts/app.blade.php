@@ -23,9 +23,9 @@
                         <div class="border-b border-gray-700">
                             <div class="flex h-16 items-center justify-between px-4 sm:px-0">
                                 <div class="flex items-center">
-                                    <div class="flex-shrink-0">
+                                    <a href="{{ route('welcome') }}" class="flex-shrink-0">
                                         <img class="h-8 w-8" src="https://tailwindui.com/img/logos/workflow-mark.svg?color=indigo&shade=500" alt="Workflow">
-                                    </div>
+                                    </a>
                                     <div class="hidden lg:block">
                                         <div class="ml-10 flex justify-center items-center space-x-4">
                                             @includeIf('admin.layouts.nav', ['mobile' => false])
