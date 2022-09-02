@@ -19,6 +19,7 @@ class Tenant extends Model
         'subdomain',
         'owner_id',
         'ends_at',
+        'about',
         'logo_url',
     ];
 
@@ -43,5 +44,10 @@ class Tenant extends Model
     public function isExceeded()
     {
         return !empty($this->ends_at) ? !$this->ends_at->isToday() && $this->ends_at->isPast() : false;
+    }
+
+    public function isOwner()
+    {
+        return !empty($this->owner_id) && (int) auth()->user()->id === (int) $this->owner_id;
     }
 }

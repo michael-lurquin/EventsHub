@@ -37,11 +37,11 @@
                                             class="absolute left-4 top-1/2 -mt-2 h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 sm:left-6" 
                                         >
                                     </th>
-                                    <th scope="col" class="py-3.5 pl-3 pr-3 text-left text-sm font-semibold text-gray-500 uppercase tracking-wider">Name</th>
-                                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-500 uppercase tracking-wider">Owner</th>
-                                    <th scope="col" class="px-3 py-3.5 text-right text-sm font-semibold text-gray-500 uppercase tracking-wider">Ends at</th>
-                                    <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-500 uppercase tracking-wider">Users</th>
-                                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-500 uppercase tracking-wider">Creation</th>
+                                    <th scope="col" class="py-3.5 pl-3 pr-3 text-left text-xs text-gray-500 uppercase tracking-wider">Name</th>
+                                    <th scope="col" class="px-3 py-3.5 text-left text-xs text-gray-500 uppercase tracking-wider">Owner</th>
+                                    <th scope="col" class="px-3 py-3.5 text-right text-xs text-gray-500 uppercase tracking-wider">Ends at</th>
+                                    <th scope="col" class="px-3 py-3.5 text-center text-xs text-gray-500 uppercase tracking-wider">Users</th>
+                                    <th scope="col" class="px-3 py-3.5 text-left text-xs text-gray-500 uppercase tracking-wider">Creation</th>
                                     <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
                                         <span class="sr-only">Actions</span>
                                     </th>
@@ -62,8 +62,8 @@
                                         </td>
                                         <td class="whitespace-nowrap py-4 px-3 text-sm">
                                             <div class="flex items-center">
-                                                <div class="h-10 w-10 flex-shrink-0">
-                                                    <img class="h-10 w-10 rounded-full" src="{{ !empty($tenant->logo_url) ? $tenant->logo_url : 'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80' }}" alt="">
+                                                <div class="h-10 w-auto flex-shrink-0">
+                                                    <img class="h-10 w-auto rounded-md" src="{{ !empty($tenant->logo_url) ? asset($tenant->logo_url) : 'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80' }}" alt="">
                                                 </div>
                                                 <div class="ml-4">
                                                     <div class="font-medium text-gray-700">{{ $tenant->name }}</div>

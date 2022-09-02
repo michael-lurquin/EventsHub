@@ -4,7 +4,7 @@ namespace App\Traits\FilterByTenant;
 
 use Illuminate\Database\Eloquent\Builder;
 
-class FilterByTenant
+class BelongsToTenant
 {
     public static function boot()
     {

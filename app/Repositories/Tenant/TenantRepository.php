@@ -4,6 +4,7 @@ namespace App\Repositories\Tenant;
 
 use App\Models\User;
 use App\Models\Tenant;
+use Illuminate\Http\UploadedFile;
 use App\Notifications\TenantInvitation;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -26,6 +27,18 @@ class TenantRepository
     public function update(Tenant $tenant, array $data) : void
     {
         $tenant->updateOrFail($data);
+    }
+
+    public function updateLogo(Tenant $tenant, UploadedFile $file) : void
+    {
+        $path = 'cdn/tenants/logos';
+        $filename = $file->hashName();
+
+        $file->move(public_path($path), $filename);
+
+        $tenant->updateOrFail([
+            'logo_url' => "{$path}/{$filename}",
+        ]);
     }
 
     public function delete(Tenant $tenant) : void
