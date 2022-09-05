@@ -64,4 +64,11 @@ class UserRepository
             'photo_url' => "{$path}/{$filename}",
         ]);
     }
+
+    public function changePassword(User $user, string $password)
+    {
+        $user->update([
+            'password' => Hash::make($password),
+        ]);
+    }
 }

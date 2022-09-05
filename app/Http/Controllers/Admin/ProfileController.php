@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UserRequest;
 use App\Repositories\User\UserRepository;
 use App\Http\Requests\Admin\ProfileRequest;
+use App\Http\Requests\Admin\PasswordRequest;
 use App\Repositories\Tenant\TenantRepository;
 
 class ProfileController extends Controller
@@ -54,5 +55,12 @@ class ProfileController extends Controller
         if ( $request->has('address') ) $this->tenantRepository->updateAddress($tenant, $request->get('address'));
 
         return redirect()->back()->with('success', 'Profile updated!');
+    }
+
+    public function updatePassword(PasswordRequest $request)
+    {
+        $this->userRepository->changePassword($request->user(), $request->get('password'));
+
+        return redirect()->back()->with('success', 'Password updated!');
     }
 }

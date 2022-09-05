@@ -106,4 +106,21 @@ class ProfileTest extends TestCase
 
         $this->assertFileExists("public/{$path}");
     }
+
+    public function testUpdatePassword()
+    {
+        $currentPassword = $this->tenant->owner->password;
+
+        $response = $this->actingAs($this->tenant->owner)->put(route('admin.profile.update-password'), [
+            'current_password' => 'password',
+            'password' => 'new-password',
+            'password_confirmation' => 'new-password',
+        ]);
+
+        $response->assertRedirect(route('welcome'));
+
+        $response->assertSessionHas('success', 'Password updated!');
+
+        $this->assertNotEquals($currentPassword, $this->tenant->owner->password);
+    }
 }
