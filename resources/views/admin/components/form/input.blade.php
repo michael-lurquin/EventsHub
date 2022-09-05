@@ -38,6 +38,7 @@
 @endif
 
 @php $placeholder = !empty($placeholder) ? $placeholder : null @endphp
+@php $autocomplete = !empty($autocomplete) ? $autocomplete : 'off' @endphp
 
 <div>
     @if ( !empty($optional) && $optional )
@@ -51,7 +52,7 @@
 
     <div class="relative mt-1 flex rounded-md shadow-sm">
         @if ( !empty($prefix) )
-            <span class="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 px-3 text-gray-500 sm:text-sm">{{ $prefix }}</span>
+            <span class="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 px-3 text-gray-500 sm:text-sm select-none">{{ $prefix }}</span>
         @elseif ( !empty($leftIcon) )
             <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                 <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -62,20 +63,20 @@
 
         @if ( $type === 'email' )
             @if ( !empty($disabled) && $disabled )
-                {!! Form::email($fieldname, old($fieldname), ['class' => $class, 'id' => $fieldname, 'autocomplete' => 'off', 'placeholder' => $placeholder, 'disabled' => 'disabled']) !!}
+                {!! Form::email($fieldname, old($fieldname), ['class' => $class, 'id' => $fieldname, 'autocomplete' => $autocomplete, 'placeholder' => $placeholder, 'disabled' => 'disabled']) !!}
             @else
-                {!! Form::email($fieldname, old($fieldname), ['class' => $class, 'id' => $fieldname, 'autocomplete' => 'off', 'placeholder' => $placeholder]) !!}
+                {!! Form::email($fieldname, old($fieldname), ['class' => $class, 'id' => $fieldname, 'autocomplete' => $autocomplete, 'placeholder' => $placeholder]) !!}
             @endif
         @else
             @if ( !empty($disabled) && $disabled )
-                {!! Form::text($fieldname, old($fieldname), ['class' => $class, 'id' => $fieldname, 'autocomplete' => 'off', 'placeholder' => $placeholder, 'disabled' => 'disabled']) !!}
+                {!! Form::text($fieldname, old($fieldname), ['class' => $class, 'id' => $fieldname, 'autocomplete' => $autocomplete, 'placeholder' => $placeholder, 'disabled' => 'disabled']) !!}
             @else
-                {!! Form::text($fieldname, old($fieldname), ['class' => $class, 'id' => $fieldname, 'autocomplete' => 'off', 'placeholder' => $placeholder]) !!}
+                {!! Form::text($fieldname, old($fieldname), ['class' => $class, 'id' => $fieldname, 'autocomplete' => $autocomplete, 'placeholder' => $placeholder]) !!}
             @endif
         @endif
 
         @if ( !empty($suffix) )
-            <span class="inline-flex items-center rounded-r-md border border-l-0 border-gray-300 bg-gray-50 px-3 text-gray-500 sm:text-sm">{{ $suffix }}</span>
+            <span class="inline-flex items-center rounded-r-md border border-l-0 border-gray-300 bg-gray-50 px-3 text-gray-500 sm:text-sm select-none">{{ $suffix }}</span>
         @elseif ( !empty($rightIcon) )
             <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                 <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">

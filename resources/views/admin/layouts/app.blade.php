@@ -13,7 +13,6 @@
 
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-
     <body class="antialiased font-sans text-sm bg-gray-50 text-gray-600 h-full">
         <div class="min-h-full" x-data="{ selected: [] }">
             <div class="bg-gray-800 px-4 {{ request()->routeIs('admin.profile') ? 'pb-0' : 'pb-32' }}">
@@ -24,7 +23,7 @@
                             <div class="flex h-16 items-center justify-between px-4 sm:px-0">
                                 <div class="flex items-center">
                                     <a href="{{ route('welcome') }}" class="flex-shrink-0">
-                                        <img class="h-8 w-8" src="https://tailwindui.com/img/logos/workflow-mark.svg?color=indigo&shade=500" alt="Workflow">
+                                        <img class="h-8 w-auto" src="{{ !empty(auth()->user()->currentTenant->logo_url) ? asset(auth()->user()->currentTenant->logo_url) : 'https://tailwindui.com/img/logos/workflow-mark.svg?color=indigo&shade=500' }}" alt="{{ config('app.name') }}">
                                     </a>
                                     <div class="hidden lg:block">
                                         <div class="ml-10 flex justify-center items-center space-x-4">
@@ -53,7 +52,7 @@
                                                     x-on:click="profile = !profile"
                                                 >
                                                     <span class="sr-only">Open user menu</span>
-                                                    <img class="h-8 w-8 rounded-full" src="{{ !empty(auth()->user()->photo_url) ? auth()->user()->photo_url : 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80' }}" alt="">
+                                                    <img class="h-8 w-8 rounded-full" src="{{ !empty(auth()->user()->photo_url) ? asset(auth()->user()->photo_url) : 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80' }}" alt="">
                                                 </button>
                                             </div>
                                             <div 
@@ -105,7 +104,7 @@
                         <div class="border-t border-gray-700 pt-4 pb-3">
                             <div class="flex items-center px-5">
                                 <div class="flex-shrink-0">
-                                    <img class="h-10 w-10 rounded-full" src="{{ !empty(auth()->user()->photo_url) ? auth()->user()->photo_url : 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80' }}" alt="">
+                                    <img class="h-10 w-10 rounded-full" src="{{ !empty(auth()->user()->photo_url) ? asset(auth()->user()->photo_url) : 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80' }}" alt="">
                                 </div>
                                 <div class="ml-3">
                                     <div class="text-base font-medium leading-none text-white">{{ auth()->user()->name }}</div>

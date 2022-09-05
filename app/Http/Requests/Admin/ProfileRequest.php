@@ -12,7 +12,7 @@ class ProfileRequest extends FormRequest
 
     public function __construct()
     {
-        $this->tenant = auth()->user()->currentTenant;
+        $this->tenant = auth()->user()->load('currentTenant')->currentTenant;
     }
 
     /**
@@ -22,7 +22,7 @@ class ProfileRequest extends FormRequest
      */
     public function authorize()
     {
-        return $this->tenant->isOwner();
+        return !empty($this->tenant) && $this->tenant->isOwner();
     }
 
     /**
@@ -35,7 +35,6 @@ class ProfileRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'email' => 'required|email|string|max:255',
-            'subdomain' => 'required|string|max:255|unique:tenants,subdomain,id',
             'subdomain' => [
                 'required',
                 'string',
@@ -44,6 +43,12 @@ class ProfileRequest extends FormRequest
             ],
             'about' => 'nullable|max:500',
             'logo_url' => 'nullable|image|mimes:png,jpg|max:5120',
+
+            'address.street' => 'nullable|string|max:500',
+            'address.post_code' => 'nullable|string|max:10',
+            'address.city' => 'nullable|string|max:60',
+            'address.state' => 'nullable|string|max:60',
+            'address.country_code' => 'nullable|string|size:3',
         ];
     }
 }

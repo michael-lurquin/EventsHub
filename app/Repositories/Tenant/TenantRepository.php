@@ -73,4 +73,12 @@ class TenantRepository
 
         $tenant->notify(new TenantInvitation($tenant, 'fake-url'));
     }
+
+    public function updateAddress(Tenant $tenant, array $data)
+    {
+        $tenant->address()->updateOrCreate([
+            'addressable_id' => $tenant->id,
+            'addressable_type' => Tenant::class,
+        ], $data);
+    }
 }

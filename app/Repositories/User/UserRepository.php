@@ -4,6 +4,7 @@ namespace App\Repositories\User;
 
 use App\Models\User;
 use App\Models\Tenant;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Hash;
 use App\Notifications\UserInvitation;
 
@@ -50,5 +51,17 @@ class UserRepository
         // $url = URL::signedRoute('users.invitation', $user);
 
         $user->notify(new UserInvitation($user, 'fake-url'));
+    }
+
+    public function updatePhoto(User $user, UploadedFile $file) : void
+    {
+        $path = 'cdn/tenants/avatars';
+        $filename = $file->hashName();
+
+        $file->move(public_path($path), $filename);
+
+        $user->updateOrFail([
+            'photo_url' => "{$path}/{$filename}",
+        ]);
     }
 }

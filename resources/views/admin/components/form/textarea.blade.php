@@ -37,6 +37,10 @@
     @php $class .= ' rounded-md' @endphp
 @endif
 
+@php $rows = !empty($rows) ? $rows : 3 @endphp
+@php $placeholder = !empty($placeholder) ? $placeholder : null @endphp
+@php $autocomplete = !empty($autocomplete) ? $autocomplete : 'off' @endphp
+
 <div>
     @if ( !empty($optional) && $optional )
         <div class="flex justify-between">
@@ -54,16 +58,15 @@
                 </svg>
             </div>
         @elseif ( !empty($prefix) )
-            <span class="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 px-3 text-gray-500 sm:text-sm">{{ $prefix }}</span>
+            <span class="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 px-3 text-gray-500 sm:text-sm select-none">{{ $prefix }}</span>
         @endif
-        <textarea 
-            rows="{{ !empty($rows) ? $rows : 3 }}" 
-            name="{{ $fieldname }}" 
-            id="{{ $fieldname }}" 
-            class="{{ $class }}"
-            @if ( !empty($placeholder) ) placeholder="{{ $placeholder }}" @endif
-            @if ( !empty($disabled) && $disabled ) disabled @endif
-        ></textarea>
+
+        @if ( !empty($disabled) && $disabled )
+            {!! Form::textarea($fieldname, old($fieldname), ['class' => $class, 'id' => $fieldname, 'autocomplete' => $autocomplete, 'placeholder' => $placeholder, 'rows' => $rows, 'disabled' => 'disabled']) !!}
+        @else
+            {!! Form::textarea($fieldname, old($fieldname), ['class' => $class, 'id' => $fieldname, 'autocomplete' => $autocomplete, 'placeholder' => $placeholder, 'rows' => $rows]) !!}
+        @endif
+
         @if ( $errors->has($fieldname) )
             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
                 <svg class="h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -77,7 +80,7 @@
                 </svg>
             </div>
         @elseif ( !empty($suffix) )
-            <span class="inline-flex items-center rounded-r-md border border-l-0 border-gray-300 bg-gray-50 px-3 text-gray-500 sm:text-sm">{{ $suffix }}</span>
+            <span class="inline-flex items-center rounded-r-md border border-l-0 border-gray-300 bg-gray-50 px-3 text-gray-500 sm:text-sm select-none">{{ $suffix }}</span>
         @endif
     </div>
     @if ( $errors->has($fieldname) )

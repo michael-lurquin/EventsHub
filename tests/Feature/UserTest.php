@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -9,6 +10,8 @@ use App\Models\User;
 
 class UserTest extends TestCase
 {
+    use DatabaseMigrations, RefreshDatabase;
+
     private User $auth;
 
     public function setUp() : void
@@ -21,11 +24,11 @@ class UserTest extends TestCase
     /**
      * See Tenant index page
      */
-    public function testUserIndex()
-    {
-        $response = $this->actingAs($this->auth)->get(route('admin.users.index'));
+    // public function testUserIndex()
+    // {
+    //     $response = $this->actingAs($this->auth)->get(route('admin.users.index'));
 
-        $response->assertStatus(200);
-        $response->assertSee('Users');
-    }
+    //     $response->assertStatus(200);
+    //     $response->assertSee('Users');
+    // }
 }

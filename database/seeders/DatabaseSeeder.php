@@ -21,7 +21,8 @@ class DatabaseSeeder extends Seeder
         $userRepository = new UserRepository();
 
         $user = $userRepository->create([
-            'name' => 'Michaël Lurquin',
+            'last_name' => 'Lurquin',
+            'first_name' => 'Michaël',
             'email' => 'michael.l@learnence.com',
             'password' => 'password',
         ]);
@@ -36,6 +37,14 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $tenantRepository->addUser($tenant, $user);
+
+        $tenantRepository->updateAddress($tenant, [
+            'street' => 'Chaussée de Tirlemont 75',
+            'city' => 'Gembloux',
+            'post_code' => '5300',
+            'state' => 'Namur',
+            'country_code' => 'BEL',
+        ]);
 
         $userRepository->changeTenant($user, $tenant);
 

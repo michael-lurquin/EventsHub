@@ -11,6 +11,7 @@ Route::permanentRedirect('/', '/admin/dashboard');
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 Route::get('/profile', [ProfileController::class, 'profile'])->name('profile');
 Route::put('/profile/update', [ProfileController::class, 'updateProfile'])->name('profile.update');
+Route::put('/profile/update-personal', [ProfileController::class, 'updatePersonal'])->name('profile.update-personal');
 
 // Bulk-action
 Route::post('/bulk-action/{for}', [DashboardController::class, 'bulkAction'])->name('bulk-action');

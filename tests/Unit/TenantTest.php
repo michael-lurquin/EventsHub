@@ -5,12 +5,17 @@ namespace Tests\Unit;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Tenant;
+use App\Models\Address;
 use App\Notifications\TenantInvitation;
 use Illuminate\Support\Facades\Notification;
 use App\Repositories\Tenant\TenantRepository;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class TenantTest extends TestCase
 {
+    use DatabaseMigrations, RefreshDatabase;
+
     private Tenant $tenant;
     private TenantRepository $repository;
 
@@ -19,9 +24,7 @@ class TenantTest extends TestCase
         parent::setUp();
 
         $this->user = User::factory()->create();
-        $this->tenant = Tenant::factory()->state([
-            'owner_id' => $this->user,
-        ])->create();
+        $this->tenant = Tenant::factory()->create();
         $this->repository = new TenantRepository();
     }
 
@@ -30,9 +33,7 @@ class TenantTest extends TestCase
      */
     public function testCreateTenant()
     {
-        $data = Tenant::factory()->make([
-            'owner_id' => $this->user,
-        ])->toArray();
+        $data = Tenant::factory()->make()->toArray();
 
         $tenant = $this->repository->create($data);
 
@@ -145,5 +146,19 @@ class TenantTest extends TestCase
         $this->repository->sendInvitation($this->tenant);
 
         Notification::assertSentTo($this->tenant, TenantInvitation::class);
+    }
+
+    /**
+     * Enregistrement d'une adresse postale
+     */
+    public function testSaveAddress()
+    {
+        $address = Address::factory()->create()->toArray();
+
+        $this->assertNull($this->tenant->address);
+
+        $this->repository->updateAddress($this->tenant, $address);
+
+        $this->assertNotNull($this->tenant->fresh()->address);
     }
 }

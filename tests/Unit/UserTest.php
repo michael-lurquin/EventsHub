@@ -8,9 +8,13 @@ use App\Models\Tenant;
 use App\Notifications\UserInvitation;
 use App\Repositories\User\UserRepository;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class UserTest extends TestCase
 {
+    use DatabaseMigrations, RefreshDatabase;
+
     private User $user;
     private UserRepository $repository;
 
@@ -41,11 +45,11 @@ class UserTest extends TestCase
      */
     public function testEditUser()
     {
-        $data['name'] = 'John Doe';
+        $data['last_name'] = 'Doe';
 
         $this->repository->update($this->user, $data);
 
-        $this->assertEquals($data['name'], $this->user->name);
+        $this->assertEquals($data['last_name'], $this->user->last_name);
     }
 
     /**

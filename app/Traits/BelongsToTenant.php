@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Traits\FilterByTenant;
+namespace App\Traits;
 
 use Illuminate\Database\Eloquent\Builder;
 
-class BelongsToTenant
+trait BelongsToTenant
 {
     public static function boot()
     {
