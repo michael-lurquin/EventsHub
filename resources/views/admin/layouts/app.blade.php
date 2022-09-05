@@ -14,6 +14,7 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="antialiased font-sans text-sm bg-gray-50 text-gray-600 h-full">
+        @includeWhen(session('success'), 'admin.layouts.flash')
         <div class="min-h-full" x-data="{ selected: [] }">
             <div class="bg-gray-800 px-4 {{ request()->routeIs('admin.profile') ? 'pb-0' : 'pb-32' }}">
                 <nav class="bg-gray-800" x-data="{ open: false }">

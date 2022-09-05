@@ -16,7 +16,7 @@
             <div class="mt-5 md:col-span-2 md:mt-0">
                 {!! Form::model($user, ['route' => ['admin.profile.update-personal', $user], 'method' => 'PUT', 'files' => true]) !!}
                     <div class="overflow-hidden shadow sm:rounded-md">
-                        @includeWhen($errors->isNotEmpty() || session('success'), 'admin.layouts.flash')
+                        @includeWhen($errors->isNotEmpty(), 'admin.layouts.flash')
                         <div class="bg-white px-4 py-5 sm:p-6">
                             <div class="grid grid-cols-6 gap-6">
                                 <div class="col-span-6 sm:col-span-3">
@@ -136,6 +136,7 @@
                             @includeIf('admin.components.form.file', [
                                 'fieldname' => 'logo_url',
                                 'label' => 'Logo',
+                                'file' => $tenant->logo_url,
                             ])
 
                             <div class="grid grid-cols-6 gap-6">
