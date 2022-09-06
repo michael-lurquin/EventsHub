@@ -38,7 +38,14 @@
 @endif
 
 <div>
-    <label for="{{ $fieldname }}" class="block text-sm text-gray-700">{{ $label }}</label>
+    @if ( !empty($optional) && $optional )
+        <div class="flex justify-between">
+            <label for="{{ $fieldname }}" class="block text-sm text-gray-700">{{ $label }}</label>
+            <span class="text-sm text-gray-500" id="{{ $fieldname }}-optional">Optional</span>
+        </div>
+    @else
+        <label for="{{ $fieldname }}" class="block text-sm text-gray-700">{{ $label }}</label>
+    @endif
     {!! Form::select($fieldname, ['' => ''] + $values, null, ['class' => $class]) !!}
     @if ( $errors->has($fieldname) )
         <p class="mt-2 text-sm text-red-600" id="{{ $fieldname }}-error">{!! $errors->get($fieldname)[0] !!}</p>
