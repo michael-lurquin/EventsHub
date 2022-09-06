@@ -22,6 +22,7 @@ class Tenant extends Model
         'ends_at',
         'about',
         'logo_url',
+        'url',
     ];
 
     protected $casts = [

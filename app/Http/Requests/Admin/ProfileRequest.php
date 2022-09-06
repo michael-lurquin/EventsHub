@@ -43,6 +43,7 @@ class ProfileRequest extends FormRequest
             ],
             'about' => 'nullable|max:500',
             'logo_url' => 'nullable|image|mimes:png,jpg|max:5120',
+            'url' => 'nullable|url|max:255',
 
             'address.street' => 'nullable|string|max:500',
             'address.post_code' => 'nullable|string|max:10',

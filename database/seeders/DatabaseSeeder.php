@@ -3,9 +3,12 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use App\Repositories\Tenant\TenantRepository;
-use App\Repositories\User\UserRepository;
+use App\Models\User;
+use App\Models\Tenant;
+use App\Models\Address;
 use Illuminate\Database\Seeder;
+use App\Repositories\User\UserRepository;
+use App\Repositories\Tenant\TenantRepository;
 
 class DatabaseSeeder extends Seeder
 {
@@ -34,6 +37,8 @@ class DatabaseSeeder extends Seeder
             'email' => 'info@learnence.com',
             'subdomain' => 'learnence',
             'owner_id' => $user->id,
+            'url' => 'https://learnence.com',
+            'about' => implode("\r\n\r\n", fake()->paragraphs()),
         ]);
 
         $tenantRepository->addUser($tenant, $user);
@@ -49,8 +54,16 @@ class DatabaseSeeder extends Seeder
         $userRepository->changeTenant($user, $tenant);
 
         // For test
-        \App\Models\Tenant::factory()->state([
-            'owner_id' => $user->id,
-        ])->count(25)->create();
+        Tenant::factory()->state([
+            'owner_id' => User::factory(),
+        ])
+            ->count(15)
+            ->has(Address::factory(), 'address')
+            ->create()
+        ;
+
+        Tenant::where('name', '!=', 'Learnence')->get()->each(function(Tenant $tenant) use($tenantRepository) {
+            $tenantRepository->addUser($tenant, $tenant->owner);
+        });
     }
 }

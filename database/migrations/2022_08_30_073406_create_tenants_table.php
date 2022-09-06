@@ -22,6 +22,7 @@ return new class extends Migration
             $table->date('ends_at')->nullable();
             $table->longText('about')->nullable();
             $table->string('logo_url')->nullable();
+            $table->string('url')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

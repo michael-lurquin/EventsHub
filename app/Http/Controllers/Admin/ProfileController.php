@@ -33,11 +33,7 @@ class ProfileController extends Controller
 
     public function updatePersonal(UserRequest $request)
     {
-        $this->userRepository->update($request->user(), [
-            'last_name' => $request->get('last_name'),
-            'first_name' => $request->get('first_name'),
-            'email' => $request->get('email'),
-        ]);
+        $this->userRepository->update($request->user(), $request->only(['last_name', 'first_name', 'email']));
 
         if ( $request->hasFile('photo_url') ) $this->userRepository->updatePhoto($request->user(), $request->file('photo_url'));
 
@@ -48,7 +44,7 @@ class ProfileController extends Controller
     {
         $tenant = $request->user()->currentTenant;
 
-        $this->tenantRepository->update($tenant, $request->except(['address', 'logo_url']));
+        $this->tenantRepository->update($tenant, $request->only(['name', 'email', 'subdomain', 'about', 'url']));
 
         if ( $request->hasFile('logo_url') ) $this->tenantRepository->updateLogo($tenant, $request->file('logo_url'));
 
