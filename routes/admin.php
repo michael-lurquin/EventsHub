@@ -9,10 +9,14 @@ use App\Http\Controllers\Admin\DashboardController;
 // Dashboard
 Route::permanentRedirect('/', '/admin/dashboard');
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-Route::get('/profile', [ProfileController::class, 'profile'])->name('profile');
-Route::put('/profile/update', [ProfileController::class, 'updateProfile'])->name('profile.update');
-Route::put('/profile/update-personal', [ProfileController::class, 'updatePersonal'])->name('profile.update-personal');
-Route::put('/profile/update-password', [ProfileController::class, 'updatePassword'])->name('profile.update-password');
+
+// Profile
+Route::get('/profile/account', [ProfileController::class, 'account'])->name('profile.account');
+Route::put('/profile/account', [ProfileController::class, 'updateAccount'])->name('profile.update-account');
+Route::get('/profile/company', [ProfileController::class, 'company'])->name('profile.company');
+Route::put('/profile/company', [ProfileController::class, 'updateCompany'])->name('profile.update-company');
+Route::get('/profile/password', [ProfileController::class, 'password'])->name('profile.password');
+Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.update-password');
 
 // Bulk-action
 Route::post('/bulk-action/{for}', [DashboardController::class, 'bulkAction'])->name('bulk-action');

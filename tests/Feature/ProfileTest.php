@@ -28,20 +28,20 @@ class ProfileTest extends TestCase
     }
 
     /**
-     * See Profile page
+     * See Profile/Account page
      */
-    public function testSeeProfile()
+    public function testSeeProfileAccount()
     {
-        $response = $this->actingAs($this->tenant->owner)->get(route('admin.profile'));
+        $response = $this->actingAs($this->tenant->owner)->get(route('admin.profile.account'));
 
         $response->assertSuccessful();
-        $response->assertSee('Profile');
+        $response->assertSee('Profile / Account');
     }
 
     /**
-     * Enregistrement de la section "Personal information"
+     * Enregistrement de la section "Profile/Account"
      */
-    public function testSavePersonalData()
+    public function testSaveProfileAccount()
     {
         Storage::fake('s3');
 
@@ -55,7 +55,7 @@ class ProfileTest extends TestCase
             'photo_url' => $file,
         ];
 
-        $response = $this->actingAs($this->tenant->owner)->put(route('admin.profile.update-personal'), $data);
+        $response = $this->actingAs($this->tenant->owner)->put(route('admin.profile.update-account'), $data);
 
         $response->assertRedirect(route('welcome'));
 
@@ -68,9 +68,20 @@ class ProfileTest extends TestCase
     }
 
     /**
-     * Enregistrement de la section "Profile"
+     * See Profile/Company page
      */
-    public function testSaveProfileData()
+    public function testSeeProfileCompany()
+    {
+        $response = $this->actingAs($this->tenant->owner)->get(route('admin.profile.company'));
+
+        $response->assertSuccessful();
+        $response->assertSee('Profile / Company');
+    }
+
+    /**
+     * Enregistrement de la section "Profile/Company"
+     */
+    public function testSaveProfileCompany()
     {
         Storage::fake('s3');
 
@@ -92,7 +103,7 @@ class ProfileTest extends TestCase
             ],
         ];
 
-        $response = $this->actingAs($this->tenant->owner)->put(route('admin.profile.update'), $data);
+        $response = $this->actingAs($this->tenant->owner)->put(route('admin.profile.company'), $data);
 
         $response->assertRedirect(route('welcome'));
 
@@ -107,6 +118,20 @@ class ProfileTest extends TestCase
         $this->assertFileExists("public/{$path}");
     }
 
+    /**
+     * See Profile/Password page
+     */
+    public function testSeeProfilePassword()
+    {
+        $response = $this->actingAs($this->tenant->owner)->get(route('admin.profile.password'));
+
+        $response->assertSuccessful();
+        $response->assertSee('Profile / Password');
+    }
+
+    /**
+     * Changement de mot de passe "Profile/Password"
+     */
     public function testUpdatePassword()
     {
         $currentPassword = $this->tenant->owner->password;

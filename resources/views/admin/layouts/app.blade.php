@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="h-full bg-gray-50">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="h-full">
     <head>
         <meta charset="utf-8">
         <meta name="author" content="Michaël Lurquin">
@@ -14,9 +14,8 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="antialiased font-sans text-sm bg-gray-50 text-gray-600 h-full">
-        @includeWhen(session('success'), 'admin.layouts.flash')
         <div class="min-h-full" x-data="{ selected: [] }">
-            <div class="bg-gray-800 px-4 {{ request()->routeIs('admin.profile') ? 'pb-0' : 'pb-32' }}">
+            <div class="bg-gray-800 px-4 {{ request()->routeIs('admin.profile.*') ? 'pb-0' : 'pb-32' }}">
                 <nav class="bg-gray-800" x-data="{ open: false }">
                     <!-- Desktop -->
                     <div class="mx-auto container">

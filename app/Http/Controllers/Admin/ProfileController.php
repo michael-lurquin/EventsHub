@@ -20,27 +20,33 @@ class ProfileController extends Controller
         $this->userRepository = $userRepository;
     }
 
-    public function profile()
+    public function account()
     {
-        $user = auth()->user();
-        $countries = listOfCountries();
-
-        return view('admin.profile', compact('countries'))->with([
-            'user' => $user,
-            'tenant' => $user->load('currentTenant.address')->currentTenant,
+        return view('admin.profile.account')->with([
+            'user' => auth()->user(),
         ]);
     }
 
-    public function updatePersonal(UserRequest $request)
+    public function updateAccount(UserRequest $request)
     {
         $this->userRepository->update($request->user(), $request->only(['last_name', 'first_name', 'email']));
 
         if ( $request->hasFile('photo_url') ) $this->userRepository->updatePhoto($request->user(), $request->file('photo_url'));
 
-        return redirect()->back()->with('success', 'Personal information updated!');
+        return redirect()->back()->with('success', 'Profile account updated!');
     }
 
-    public function updateProfile(ProfileRequest $request)
+    public function company()
+    {
+        $countries = listOfCountries();
+
+        return view('admin.profile.company', compact('countries'))->with([
+            'user' => auth()->user(),
+            'tenant' => auth()->user()->load('currentTenant.address')->currentTenant,
+        ]);
+    }
+
+    public function updateCompany(ProfileRequest $request)
     {
         $tenant = $request->user()->currentTenant;
 
@@ -50,13 +56,20 @@ class ProfileController extends Controller
 
         if ( $request->has('address') ) $this->tenantRepository->updateAddress($tenant, $request->get('address'));
 
-        return redirect()->back()->with('success', 'Profile updated!');
+        return redirect()->back()->with('success', 'Profile company updated!');
+    }
+
+    public function password()
+    {
+        return view('admin.profile.password')->with([
+            'user' => auth()->user(),
+        ]);
     }
 
     public function updatePassword(PasswordRequest $request)
     {
         $this->userRepository->changePassword($request->user(), $request->get('password'));
 
-        return redirect()->back()->with('success', 'Password updated!');
+        return redirect()->back()->with('success', 'Password changed!');
     }
 }
