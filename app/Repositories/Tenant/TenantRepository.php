@@ -58,7 +58,7 @@ class TenantRepository
         $tenant->deleteOrFail();
     }
 
-    public function deleteForce(Tenant $tenant) : void
+    public function forceDelete(Tenant $tenant) : void
     {
         $tenant->users()->sync([]);
         $tenant->forceDelete();

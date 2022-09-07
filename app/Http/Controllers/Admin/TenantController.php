@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Tenant;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\TenantRequest;
 use App\Repositories\Tenant\TenantRepository;
@@ -108,6 +107,17 @@ class TenantController extends Controller
     }
 
     /**
+     * Confirm remove the specified resource from storage.
+     *
+     * @param  \App\Models\Tenant  $tenant
+     * @return \Illuminate\Http\Response
+     */
+    public function confirmDestroy(Tenant $tenant)
+    {
+        return view('admin.tenants.confirm', compact('tenant'));
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Tenant  $tenant
@@ -115,6 +125,34 @@ class TenantController extends Controller
      */
     public function destroy(Tenant $tenant)
     {
-        dd($tenant);
+        $this->tenantRepository->delete($tenant);
+
+        return redirect()->route('admin.tenants.index', ['tenant' => $tenant, 'currentTab' => 'all'])->with('success', "Tenant \"{$tenant->name}\" deleted!");
+    }
+
+    /**
+     * Restore the specified resource from storage.
+     *
+     * @param  \App\Models\Tenant  $tenant
+     * @return \Illuminate\Http\Response
+     */
+    public function restore(Tenant $tenant)
+    {
+        $this->tenantRepository->restore($tenant);
+
+        return redirect()->route('admin.tenants.index', ['tenant' => $tenant, 'currentTab' => 'all'])->with('success', "Tenant \"{$tenant->name}\" restored!");
+    }
+
+    /**
+     * Remove "force" the specified resource from storage.
+     *
+     * @param  \App\Models\Tenant  $tenant
+     * @return \Illuminate\Http\Response
+     */
+    public function forceDestroy(Tenant $tenant)
+    {
+        $this->tenantRepository->forceDelete($tenant);
+
+        return redirect()->route('admin.tenants.index', ['tenant' => $tenant, 'currentTab' => 'all'])->with('success', "Tenant \"{$tenant->name}\" deleted definitly!");
     }
 }

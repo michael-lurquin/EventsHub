@@ -5,7 +5,12 @@
             <a
                 href="{{ route('admin.tenants.create') }}"
                 class="ml-3 inline-flex items-center rounded-md border px-4 py-2 text-sm font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 border-transparent bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-indigo-500"
-            >New Tenant</a>
+            >
+                <svg class="-ml-1 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
+                </svg>
+                New Tenant
+            </a>
         </div>
     </div>
     <div class="mt-4">
@@ -27,7 +32,7 @@
                     aria-current="page"
                 >
                     <span>All</span>
-                    <span class="{{ $currentTab === 'all' ? 'bg-indigo-100 text-indigo-600' : 'bg-gray-50 text-gray-400' }} hidden ml-3 py-0.5 px-2.5 rounded-full text-xs font-medium md:inline-block">{{ $tenants['expired']->count() }}</span>
+                    <span class="{{ $currentTab === 'all' ? 'bg-indigo-100 text-indigo-600' : 'bg-gray-50 text-gray-400' }} hidden ml-3 py-0.5 px-2.5 rounded-full text-xs font-medium md:inline-block">{{ $tenants['all']->total() }}</span>
                 </a>
                 <a
                     href="{{ route('admin.tenants.index', ['currentTab' => 'expired']) }}" 
@@ -40,10 +45,10 @@
                         fill="currentColor" 
                         aria-hidden="true"
                     >
-                        <path fill-rule="evenodd" d="M6.75 2.25A.75.75 0 017.5 3v1.5h9V3A.75.75 0 0118 3v1.5h.75a3 3 0 013 3v11.25a3 3 0 01-3 3H5.25a3 3 0 01-3-3V7.5a3 3 0 013-3H6V3a.75.75 0 01.75-.75zm13.5 9a1.5 1.5 0 00-1.5-1.5H5.25a1.5 1.5 0 00-1.5 1.5v7.5a1.5 1.5 0 001.5 1.5h13.5a1.5 1.5 0 001.5-1.5v-7.5z" clip-rule="evenodd" />
+                        <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 6a.75.75 0 00-1.5 0v6c0 .414.336.75.75.75h4.5a.75.75 0 000-1.5h-3.75V6z" clip-rule="evenodd" />
                     </svg>
                     <span>Expired</span>
-                    <span class="{{ $currentTab === 'expired' ? 'bg-indigo-100 text-indigo-600' : 'bg-gray-50 text-gray-400' }} hidden ml-3 py-0.5 px-2.5 rounded-full text-xs font-medium md:inline-block">{{ $tenants['expired']->count() }}</span>
+                    <span class="{{ $currentTab === 'expired' ? 'bg-indigo-100 text-indigo-600' : 'bg-gray-50 text-gray-400' }} hidden ml-3 py-0.5 px-2.5 rounded-full text-xs font-medium md:inline-block">{{ $tenants['expired']->total() }}</span>
                 </a>
                 <a
                     href="{{ route('admin.tenants.index', ['currentTab' => 'trash']) }}" 
@@ -59,7 +64,7 @@
                         <path fill-rule="evenodd" d="M16.5 4.478v.227a48.816 48.816 0 013.878.512.75.75 0 11-.256 1.478l-.209-.035-1.005 13.07a3 3 0 01-2.991 2.77H8.084a3 3 0 01-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 01-.256-1.478A48.567 48.567 0 017.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 013.369 0c1.603.051 2.815 1.387 2.815 2.951zm-6.136-1.452a51.196 51.196 0 013.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 00-6 0v-.113c0-.794.609-1.428 1.364-1.452zm-.355 5.945a.75.75 0 10-1.5.058l.347 9a.75.75 0 101.499-.058l-.346-9zm5.48.058a.75.75 0 10-1.498-.058l-.347 9a.75.75 0 001.5.058l.345-9z" clip-rule="evenodd" />
                     </svg>
                     <span>Trash</span>
-                    <span class="{{ $currentTab === 'trash' ? 'bg-indigo-100 text-indigo-600' : 'bg-gray-50 text-gray-400' }} hidden ml-3 py-0.5 px-2.5 rounded-full text-xs font-medium md:inline-block">{{ $tenants['trash']->count() }}</span>
+                    <span class="{{ $currentTab === 'trash' ? 'bg-indigo-100 text-indigo-600' : 'bg-gray-50 text-gray-400' }} hidden ml-3 py-0.5 px-2.5 rounded-full text-xs font-medium md:inline-block">{{ $tenants['trash']->total() }}</span>
                 </a>
             </nav>
         </div>

@@ -68,7 +68,7 @@ class TenantTest extends TestCase
      */
     public function testDeleteForceTenant()
     {
-        $this->repository->deleteForce($this->tenant);
+        $this->repository->forceDelete($this->tenant);
 
         $this->assertModelMissing($this->tenant);
     }

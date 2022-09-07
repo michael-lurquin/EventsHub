@@ -28,6 +28,9 @@ Route::resource('/tenants', TenantController::class)->scoped([
 Route::get('/tenants/tab/{currentTab}', [TenantController::class, 'index'])->name('tenants.index');
 Route::get('/tenants/{tenant}/tab/{currentTab}', [TenantController::class, 'edit'])->name('tenants.edit');
 Route::put('/tenants/{tenant}/tab/{currentTab}', [TenantController::class, 'update'])->name('tenants.update');
+Route::get('/tenants/{tenant}/delete/confirm', [TenantController::class, 'confirmDestroy'])->name('tenants.destroy.confirm');
+Route::get('/tenants/{tenant}/restore', [TenantController::class, 'restore'])->withTrashed()->name('tenants.restore');
+Route::get('/tenants/{tenant}/delete/force', [TenantController::class, 'forceDestroy'])->withTrashed()->name('tenants.destroy.force');
 
 
 // User
