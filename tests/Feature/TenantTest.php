@@ -106,6 +106,7 @@ class TenantTest extends TestCase
         $tenant = Tenant::factory()->create();
 
         $response = $this->get(route('admin.tenants.edit', $tenant));
+
         $response->assertSuccessful();
         $response->assertSee("Edit \"{$tenant->name}\" tenant");
     }

@@ -1,0 +1,116 @@
+@extends('admin.layouts.app')
+
+@section('title', 'Users')
+
+@php $bulkAction = 'tenant' @endphp
+
+@section('content')
+    <script>
+        var allData = {{ Js::from($users[$currentTab]->pluck('id')) }}
+    </script>
+
+    <aside>
+        @includeIf('admin.users.tabs')
+        <div class="mx-auto max-w-7xl py-6">
+            @if ( $users[$currentTab]->isNotEmpty() )
+                <div class="flex flex-col">
+                    <div class="-mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                        <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+                            <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+                                @includeWhen(session('success'), 'admin.layouts.flash')
+                                <table class="min-w-full divide-y divide-gray-300 {{ session('success') ? 'border-t border-gray-300' : '' }}">
+                                    <thead class="bg-gray-50">
+                                        <tr>
+                                            <th scope="col" class="relative w-12 px-6 sm:w-16 sm:px-8">
+                                                <input 
+                                                    type="checkbox" 
+                                                    x-on:click="selected.length === window.allData.length ? selected = [] : selected = window.allData" 
+                                                    class="absolute left-4 top-1/2 -mt-2 h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 sm:left-6" 
+                                                >
+                                            </th>
+                                            <th scope="col" class="py-3.5 pl-3 pr-3 text-left text-xs text-gray-500 uppercase tracking-wider">Name</th>
+                                            <th scope="col" class="px-3 py-3.5 text-left text-xs text-gray-500 uppercase tracking-wider">Creation</th>
+                                            <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                                                <span class="sr-only">Actions</span>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-gray-200 bg-white">
+                                        @foreach($users[$currentTab] as $user)
+                                            <tr :class="selected.includes({{ $user->id }}) ? 'bg-indigo-50 hover:bg-indigo-100' : 'even:bg-gray-50 hover:bg-gray-100'">
+                                                <td class="relative w-12 px-6 sm:w-16 sm:px-8">
+                                                    <div class="absolute inset-y-0 left-0 w-0.5 bg-indigo-600" x-show="selected.includes({{ $user->id }})"></div>
+                                                    <input 
+                                                        type="checkbox" 
+                                                        value="{{ $user->id }}" 
+                                                        x-model.number="selected" 
+                                                        class="absolute left-4 top-1/2 -mt-2 h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 sm:left-6" 
+                                                        checked="selected.includes({{ $user->id }})"
+                                                    >
+                                                </td>
+                                                <td class="whitespace-nowrap py-4 px-3 text-sm">
+                                                    <div class="flex items-center">
+                                                        <div class="h-10 w-auto flex-shrink-0">
+                                                            <img class="h-10 w-auto rounded-md" src="{{ !empty($user->logo_url) ? asset($user->photo_url) : 'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80' }}" alt="">
+                                                        </div>
+                                                        <div class="ml-4">
+                                                            <div class="font-medium text-gray-700">{{ $user->fullname }}</div>
+                                                            <div class="text-gray-500">{{ $user->email }}</div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="whitespace-nowrap px-3 py-4 text-sm text-left text-gray-500">{{ $user->created_at->format('d/m/Y H:i') }}</td>
+                                                <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 space-x-2">
+                                                    @if ( $user->trashed() )
+                                                        <a href="{{ route('admin.users.restore', $user) }}" class="text-yellow-600 hover:text-yellow-900">Restore<span class="sr-only">, {{ $user->fullname }}</span></a>
+                                                        <a href="{{ route('admin.users.destroy.force', $user) }}" class="text-red-600 hover:text-red-900">Delete<span class="sr-only">, {{ $user->fullname }}</span></a>
+                                                    @else
+                                                        <a href="{{ route('admin.users.edit', ['user' => $user, 'currentTab' => 'main']) }}" class="text-indigo-600 hover:text-indigo-900">Edit<span class="sr-only">, {{ $user->fullname }}</span></a>
+                                                        <a href="{{ route('admin.users.destroy.confirm', $user) }}" class="text-red-600 hover:text-red-900">Delete<span class="sr-only">, {{ $user->fullname }}</span></a>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                                {{ $users[$currentTab]->links() }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @else
+                @if ( $currentTab === 'all' )
+                    <div class="text-center bg-white px-4 py-5 sm:px-6 shadow rounded-lg mt-2">
+                        <svg class="mx-auto h-24 w-24 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" />
+                        </svg>
+                        <h3 class="mt-2 text-sm font-medium text-gray-700">No users</h3>
+                        <p class="mt-1 text-sm text-gray-500">Get started by creating a new user.</p>
+                        <div class="mt-6">
+                            <a href="{{ route('admin.users.create') }}" class="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                                <svg class="-ml-1 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
+                                </svg>
+                                New User
+                            </a>
+                        </div>
+                    </div>
+                @elseif ( $currentTab === 'expired' )
+                    <div class="text-center bg-white px-4 py-5 sm:px-6 shadow rounded-lg mt-2">
+                        <svg class="mx-auto h-24 w-24 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <h3 class="mt-2 text-sm font-medium text-gray-500">No users expired</h3>
+                    </div>
+                @elseif ( $currentTab === 'trash' )
+                    <div class="text-center bg-white px-4 py-5 sm:px-6 shadow rounded-lg mt-2">
+                        <svg class="mx-auto h-24 w-24 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                        </svg>
+                        <h3 class="mt-2 text-sm font-medium text-gray-500">No users trashed</h3>
+                    </div>
+                @endif
+            @endif
+        </div>
+    </aside>
+@endsection

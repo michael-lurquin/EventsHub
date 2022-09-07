@@ -41,7 +41,7 @@ class TenantController extends Controller
             'trash' => $this->tenantRepository->getAllTrashed(),
         ];
 
-        return view('admin.tenants.index', compact('tenants', 'tenants', 'currentTab'));
+        return view('admin.tenants.index', compact('tenants', 'currentTab'));
     }
 
     /**
@@ -62,7 +62,7 @@ class TenantController extends Controller
      */
     public function store(TenantRequest $request)
     {
-        $tenant = $this->tenantRepository->create($request->validated(), false);
+        $tenant = $this->tenantRepository->create($request->validated());
 
         return redirect()->route('admin.tenants.edit', ['tenant' => $tenant, 'currentTab' => 'address'])->with('success', "Tenant \"{$tenant->name}\" created!");
     }
@@ -90,7 +90,12 @@ class TenantController extends Controller
      */
     public function update(TenantRequest $request, Tenant $tenant, string $currentTab = 'main')
     {
-        if ( $currentTab === 'main' ) $this->tenantRepository->update($tenant, $request->validated());
+        if ( $currentTab === 'main' )
+        {
+            $this->tenantRepository->update($tenant, $request->validated());
+
+            if ( $request->hasFile('logo_url') ) $this->tenantRepository->updateLogo($tenant, $request->file('logo_url'));
+        }
         else if ( $currentTab === 'address' ) $this->tenantRepository->updateAddress($tenant, $request->validated());
         else if ( $currentTab === 'owner' ) $this->tenantRepository->updateOwner($tenant, (int) $request->get('owner_id'));
 

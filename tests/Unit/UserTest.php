@@ -67,7 +67,7 @@ class UserTest extends TestCase
      */
     public function testDeleteForceUser()
     {
-        $this->repository->deleteForce($this->user);
+        $this->repository->forceDelete($this->user);
 
         $this->assertModelMissing($this->user);
     }

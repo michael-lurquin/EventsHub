@@ -7,12 +7,23 @@ use App\Models\Tenant;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Hash;
 use App\Notifications\UserInvitation;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class UserRepository
 {
+    public function getAll(int $perPage = 10) : LengthAwarePaginator
+    {
+        return User::orderByDesc('created_at')->paginate($perPage, ['*'], 'all');
+    }
+
+    public function getAllTrashed(int $perPage = 10) : LengthAwarePaginator
+    {
+        return User::onlyTrashed()->orderByDesc('created_at')->paginate($perPage, ['*'], 'trash');
+    }
+
     public function create(array $data, bool $notification = false) : User
     {
-        if ( !empty($data['password']) ) $data['password'] = Hash::make($data['password']);
+        $data['password'] = Hash::make(!empty($data['password']) ? $data['password'] : 'password');
 
         $user = User::create($data);
 
@@ -31,7 +42,7 @@ class UserRepository
         $user->deleteOrFail();
     }
 
-    public function deleteForce(User $user) : void
+    public function forceDelete(User $user) : void
     {
         $user->forceDelete();
     }

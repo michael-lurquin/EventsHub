@@ -1,9 +1,9 @@
 @extends('admin.layouts.app')
 
-@section('title', "Confirm delete \"{$tenant->name}\" tenant")
+@section('title', "Confirm delete \"{$user->fullname}\" user")
 
 @section('content')
-    {!! Form::open(['route' => ['admin.tenants.destroy', $tenant], 'method' => 'DELETE']) !!}
+    {!! Form::open(['route' => ['admin.users.destroy', $user], 'method' => 'DELETE']) !!}
         <aside class="mx-auto max-w-7xl">
             <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
                 <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
@@ -14,9 +14,9 @@
                             </svg>
                         </div>
                         <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                            <h3 class="text-lg font-medium leading-6 text-gray-900" id="modal-title">Confirm delete tenant</h3>
+                            <h3 class="text-lg font-medium leading-6 text-gray-900" id="modal-title">Confirm delete user</h3>
                             <div class="mt-2">
-                                <p class="text-sm text-gray-500">Are you sure you want to delete "<strong>{{ $tenant->name }}</strong>" tenant? All of your data will be permanently removed. This action cannot be undone.</p>
+                                <p class="text-sm text-gray-500">Are you sure you want to delete "<strong>{{ $user->fullname }}</strong>" user? All of your data will be permanently removed. This action cannot be undone.</p>
                             </div>
                         </div>
                     </div>
@@ -31,7 +31,7 @@
                         </svg>
                         Delete
                     </button>
-                    <a href="{{ route('admin.tenants.index', ['currentTab' => 'all']) }}" class="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-600 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:w-auto sm:text-sm">Cancel</a>
+                    <a href="{{ route('admin.users.index', ['currentTab' => 'all']) }}" class="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-600 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:w-auto sm:text-sm">Cancel</a>
                 </div>
             </div>
         </aside>

@@ -50,6 +50,7 @@
                             'label' => 'Country',
                             'values' => listOfCountries(),
                             'optional' => true,
+                            'empty' => true,
                         ])
                     </div>
                 </div>

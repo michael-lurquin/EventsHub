@@ -32,6 +32,9 @@ Route::get('/tenants/{tenant}/delete/confirm', [TenantController::class, 'confir
 Route::get('/tenants/{tenant}/restore', [TenantController::class, 'restore'])->withTrashed()->name('tenants.restore');
 Route::get('/tenants/{tenant}/delete/force', [TenantController::class, 'forceDestroy'])->withTrashed()->name('tenants.destroy.force');
 
-
 // User
-Route::resource('/users', UserController::class);
+Route::resource('/users', UserController::class)->except(['index', 'show']);
+Route::get('/users/tab/{currentTab}', [UserController::class, 'index'])->name('users.index');
+Route::get('/users/{user}/delete/confirm', [UserController::class, 'confirmDestroy'])->name('users.destroy.confirm');
+Route::get('/users/{user}/restore', [UserController::class, 'restore'])->withTrashed()->name('users.restore');
+Route::get('/users/{user}/delete/force', [UserController::class, 'forceDestroy'])->withTrashed()->name('users.destroy.force');

@@ -3,17 +3,19 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
+use App\Models\Tenant;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\UserRequest;
 use App\Repositories\User\UserRepository;
 
 class UserController extends Controller
 {
     private UserRepository $repository;
 
-    public function __construct(UserRepository $repository)
+    public function __construct(UserRepository $userRepository)
     {
-        $this->repository = $repository;
+        $this->userRepository = $userRepository;
     }
 
     /**
@@ -21,9 +23,14 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(string $currentTab = 'all')
     {
-        return view('admin.users.index');
+        $users = [
+            'all' => $this->userRepository->getAll(),
+            'trash' => $this->userRepository->getAllTrashed(),
+        ];
+
+        return view('admin.users.index', compact('users', 'currentTab'));
     }
 
     /**
@@ -31,9 +38,13 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        dd('create');
+        $fromTenant = $request->has('tenant_id');
+        
+        // Tenant::findOrFail($request->get('tenant_id'));
+
+        return view('admin.users.create');
     }
 
     /**
@@ -42,22 +53,13 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        dd($request->all());
+        $user = $this->userRepository->create($request->validated());
 
-        $this->repository->create($request->validate());
-    }
+        if ( $request->hasFile('photo_url') ) $this->userRepository->updatePhoto($user, $request->file('photo_url'));
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function show(User $user)
-    {
-        dd('show');
+        return redirect()->route('admin.users.index', ['currentTab' => 'all'])->with('success', "User \"{$user->fullname}\" created!");
     }
 
     /**
@@ -66,9 +68,9 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit()
+    public function edit(User $user)
     {
-        dd('edit');
+        return view('admin.users.edit', compact('user'));
     }
 
     /**
@@ -78,11 +80,24 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(UserRequest $request, User $user)
     {
-        dd($request->all(), $user);
+        $this->userRepository->update($user, $request->validated());
 
-        $this->repository->update($user, $request->validate());
+        if ( $request->hasFile('photo_url') ) $this->userRepository->updatePhoto($user, $request->file('photo_url'));
+
+        return redirect()->route('admin.users.index', ['currentTab' => 'all'])->with('success', "User \"{$user->fullname}\" updated!");
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function confirmDestroy(User $user)
+    {
+        return view('admin.users.confirm', compact('user'));
     }
 
     /**
@@ -93,30 +108,34 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        dd($user);
+        $this->userRepository->delete($user);
 
-        $this->repository->delete($user);
+        return redirect()->route('admin.users.index', ['currentTab' => 'all'])->with('success', "User \"{$user->fullname}\" deleted!");
     }
 
     /**
-     * Restauration d'un utilisateur
+     * Restore the specified resource from storage.
      *
-     * @param User $user
-     * @return void
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\Response
      */
     public function restore(User $user)
     {
-        dd($user);
+        $this->userRepository->restore($user);
+
+        return redirect()->route('admin.users.index', ['currentTab' => 'all'])->with('success', "User \"{$user->fullname}\" restored!");
     }
 
     /**
-     * Suppression forcée d'un utilisateur
+     * Remove "force" the specified resource from storage.
      *
-     * @param User $user
-     * @return void
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\Response
      */
-    public function forceDelete(User $user)
+    public function forceDestroy(User $user)
     {
-        dd($user);
+        $this->userRepository->forceDelete($user);
+
+        return redirect()->route('admin.users.index', ['currentTab' => 'all'])->with('success', "User \"{$user->fullname}\" deleted definitly!");
     }
 }

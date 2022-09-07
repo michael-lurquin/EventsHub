@@ -37,6 +37,8 @@
     @php $class .= ' py-2 pl-3 pr-10 rounded-md' @endphp
 @endif
 
+@php $values = !empty($empty) && $empty ? ['' => ''] + $values : $values @endphp
+
 <div>
     @if ( !empty($optional) && $optional )
         <div class="flex justify-between">
@@ -46,7 +48,7 @@
     @else
         <label for="{{ $fieldname }}" class="block text-sm text-gray-700">{{ $label }}</label>
     @endif
-    {!! Form::select($fieldname, ['' => ''] + $values, null, ['class' => $class]) !!}
+    {!! Form::select($fieldname, $values, null, ['class' => $class]) !!}
     @if ( $errors->has($fieldname) )
         <p class="mt-2 text-sm text-red-600" id="{{ $fieldname }}-error">{!! $errors->get($fieldname)[0] !!}</p>
     @elseif ( !empty($help) )
