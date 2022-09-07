@@ -7,7 +7,7 @@
                 <div class="grid grid-cols-6 gap-6">
                     <div class="col-span-6">
                         @includeIf('admin.components.form.textarea', [
-                            'fieldname' => 'street',
+                            'fieldname' => 'address[street]',
                             'label' => 'Street address',
                             'autocomplete' => 'street',
                             'optional' => true,
@@ -17,7 +17,7 @@
                     <div class="col-span-6 sm:col-span-2">
                         @includeIf('admin.components.form.input', [
                             'type' => 'text',
-                            'fieldname' => 'post_code',
+                            'fieldname' => 'address[post_code]',
                             'label' => 'ZIP / Postal code',
                             'autocomplete' => 'post_code',
                             'optional' => true,
@@ -27,7 +27,7 @@
                     <div class="col-span-6 sm:col-span-4">
                         @includeIf('admin.components.form.input', [
                             'type' => 'text',
-                            'fieldname' => 'city',
+                            'fieldname' => 'address[city]',
                             'label' => 'City',
                             'autocomplete' => 'city',
                             'optional' => true,
@@ -37,7 +37,7 @@
                     <div class="col-span-6 sm:col-span-3">
                         @includeIf('admin.components.form.input', [
                             'type' => 'text',
-                            'fieldname' => 'state',
+                            'fieldname' => 'address[state]',
                             'label' => 'State / Province',
                             'autocomplete' => 'state',
                             'optional' => true,
@@ -46,7 +46,7 @@
 
                     <div class="col-span-6 sm:col-span-3">
                         @includeIf('admin.components.form.select', [
-                            'fieldname' => 'country_code',
+                            'fieldname' => 'address[country_code]',
                             'label' => 'Country',
                             'values' => listOfCountries(),
                             'optional' => true,

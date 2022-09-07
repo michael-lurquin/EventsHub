@@ -119,6 +119,7 @@ class TenantTest extends TestCase
     public function testTenantUpdateMainTab()
     {
         $tenant = Tenant::factory()->create();
+
         $data = $tenant->withoutRelations(['owner'])->toArray();
         $data['name'] = 'Updated';
         $data['ends_at'] = now()->parse($data['ends_at'])->format('Y-m-d');
@@ -147,7 +148,9 @@ class TenantTest extends TestCase
         $data = $tenant->address->toArray();
         $data['street'] = 'Updated';
 
-        $response = $this->put(route('admin.tenants.update', ['tenant' => $tenant, 'currentTab' => 'address']), $data);
+        $response = $this->put(route('admin.tenants.update', ['tenant' => $tenant, 'currentTab' => 'address']), [
+            'address' => $data,
+        ]);
 
         $this->assertDatabaseCount('addresses', 1);
         $this->assertDatabaseHas('addresses', [

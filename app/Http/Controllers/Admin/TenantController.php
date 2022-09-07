@@ -98,7 +98,7 @@ class TenantController extends Controller
 
             if ( $request->hasFile('logo_url') ) $this->tenantRepository->updateLogo($tenant, $request->file('logo_url'));
         }
-        else if ( $currentTab === 'address' ) $this->tenantRepository->updateAddress($tenant, $request->validated());
+        else if ( $currentTab === 'address' ) $this->tenantRepository->updateAddress($tenant, $request->get('address'));
         else if ( $currentTab === 'owner' ) $this->tenantRepository->updateOwner($tenant, (int) $request->get('owner_id'));
 
         $nextTab = array_search($currentTab, $this->getTabs());
