@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Tenant;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\TenantRequest;
 use App\Repositories\Tenant\TenantRepository;
 
 class TenantController extends Controller
@@ -44,9 +45,11 @@ class TenantController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TenantRequest $request)
     {
-        dd($request->all());
+        $tenant = $this->repository->create($request->validated(), false);
+
+        return redirect()->route('admin.tenants.index')->with('success', "Tenant \"{$tenant->name}\" created!");
     }
 
     /**
@@ -80,7 +83,7 @@ class TenantController extends Controller
      * @param  \App\Models\Tenant  $tenant
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Tenant $tenant)
+    public function update(TenantRequest $request, Tenant $tenant)
     {
         dd($request->all());
     }

@@ -1,15 +1,13 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Profile / Account')
-
-@php $breadcrumbs = [] @endphp
+@section('title', 'Profile')
 
 @section('content')
-    <div class="mt-36">
-        @includeIf('admin.profile.tabs')
+    {!! Form::model($user, ['route' => 'admin.profile.update.details', 'method' => 'PUT', 'files' => true]) !!}
+        <aside>
+            @includeIf('admin.profile.tabs')
 
-        <div class="mt-6 lg:mt-8">
-            {!! Form::model($user, ['route' => 'admin.profile.update-account', 'method' => 'PUT', 'files' => true]) !!}
+            <div class="mx-auto max-w-7xl py-6">
                 <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
                     @includeWhen($errors->isNotEmpty() || session('success'), 'admin.layouts.flash')
                     <div class="bg-white px-4 py-5 sm:p-6">
@@ -67,11 +65,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
-                        <button type="submit" class="btn-primary">Save</button>
-                    </div>
                 </div>
-            {!! Form::close() !!}
-        </div>
-    </div>
+            </div>
+        </aside>
+    {!! Form::close() !!}
 @endsection

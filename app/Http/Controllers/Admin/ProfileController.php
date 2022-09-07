@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\UserRequest;
 use App\Repositories\User\UserRepository;
-use App\Http\Requests\Admin\ProfileRequest;
-use App\Http\Requests\Admin\PasswordRequest;
 use App\Repositories\Tenant\TenantRepository;
+use App\Http\Requests\Admin\Profile\DetailRequest;
+use App\Http\Requests\Admin\Profile\CompanyRequest;
+use App\Http\Requests\Admin\Profile\PasswordRequest;
 
 class ProfileController extends Controller
 {
@@ -20,33 +20,32 @@ class ProfileController extends Controller
         $this->userRepository = $userRepository;
     }
 
-    public function account()
+    public function details()
     {
-        return view('admin.profile.account')->with([
+        return view('admin.profile.details')->with([
             'user' => auth()->user(),
         ]);
     }
 
-    public function updateAccount(UserRequest $request)
+    public function updateDetails(DetailRequest $request)
     {
         $this->userRepository->update($request->user(), $request->only(['last_name', 'first_name', 'email']));
 
         if ( $request->hasFile('photo_url') ) $this->userRepository->updatePhoto($request->user(), $request->file('photo_url'));
 
-        return redirect()->back()->with('success', 'Profile account updated!');
+        return redirect()->route('admin.profile.details')->with('success', 'Profile details updated!');
     }
 
     public function company()
     {
-        $countries = listOfCountries();
-
-        return view('admin.profile.company', compact('countries'))->with([
+        return view('admin.profile.company')->with([
             'user' => auth()->user(),
-            'tenant' => auth()->user()->load('currentTenant.address')->currentTenant,
+            'tenant' => auth()->user()->currentTenant,
+            'countries' => listOfCountries(),
         ]);
     }
 
-    public function updateCompany(ProfileRequest $request)
+    public function updateCompany(CompanyRequest $request)
     {
         $tenant = $request->user()->currentTenant;
 
@@ -56,7 +55,7 @@ class ProfileController extends Controller
 
         if ( $request->has('address') ) $this->tenantRepository->updateAddress($tenant, $request->get('address'));
 
-        return redirect()->back()->with('success', 'Profile company updated!');
+        return redirect()->route('admin.profile.company')->with('success', 'Profile company updated!');
     }
 
     public function password()
@@ -70,6 +69,6 @@ class ProfileController extends Controller
     {
         $this->userRepository->changePassword($request->user(), $request->get('password'));
 
-        return redirect()->back()->with('success', 'Password changed!');
+        return redirect()->route('admin.profile.password')->with('success', 'Password changed!');
     }
 }

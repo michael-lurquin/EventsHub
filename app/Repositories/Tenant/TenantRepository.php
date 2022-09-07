@@ -17,6 +17,8 @@ class TenantRepository
 
     public function create(array $data, bool $notification = false) : Tenant
     {
+        if ( empty($data['owner_id']) ) $data['owner_id'] = auth()->user()->id;
+
         $tenant = Tenant::create($data);
 
         if ( $notification ) $this->sendInvitation($tenant);

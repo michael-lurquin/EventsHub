@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Admin;
+namespace App\Http\Requests\Admin\Profile;
 
 use Laravel\Fortify\Rules\Password;
 use Illuminate\Foundation\Http\FormRequest;
