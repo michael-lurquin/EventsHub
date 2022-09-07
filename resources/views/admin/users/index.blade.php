@@ -51,9 +51,17 @@
                                                 </td>
                                                 <td class="whitespace-nowrap py-4 px-3 text-sm">
                                                     <div class="flex items-center">
-                                                        <div class="h-10 w-auto flex-shrink-0">
-                                                            <img class="h-10 w-auto rounded-md" src="{{ !empty($user->logo_url) ? asset($user->photo_url) : 'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80' }}" alt="">
-                                                        </div>
+                                                        @if ( !empty($user->photo_url) )
+                                                            <div class="h-10 w-10 flex-shrink-0">
+                                                                <img class="h-10 w-10 rounded-md" src="{{ asset($user->photo_url) }}" alt="">
+                                                            </div>
+                                                        @else
+                                                            <span class="h-10 w-10 flex-shrink-0 {{ $loop->even ? 'bg-white' : 'bg-gray-100' }} border border-gray-200 rounded-md flex justify-center items-center text-gray-500 p-1.5">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+                                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                                                                </svg>
+                                                            </span>
+                                                        @endif
                                                         <div class="ml-4">
                                                             <div class="font-medium text-gray-700">{{ $user->fullname }}</div>
                                                             <div class="text-gray-500">{{ $user->email }}</div>

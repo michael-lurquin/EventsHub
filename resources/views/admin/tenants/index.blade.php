@@ -53,9 +53,17 @@
                                                 </td>
                                                 <td class="whitespace-nowrap py-4 px-3 text-sm">
                                                     <div class="flex items-center">
-                                                        <div class="h-10 w-auto flex-shrink-0">
-                                                            <img class="h-10 w-auto rounded-md" src="{{ !empty($tenant->logo_url) ? asset($tenant->logo_url) : 'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80' }}" alt="">
-                                                        </div>
+                                                        @if ( !empty($tenant->logo_url) )
+                                                            <div class="h-10 w-auto flex-shrink-0">
+                                                                <img class="h-10 w-auto rounded-md" src="{{ asset($tenant->logo_url) }}" alt="">
+                                                            </div>
+                                                        @else
+                                                            <span class="h-10 w-10 flex-shrink-0 {{ $loop->even ? 'bg-white' : 'bg-gray-100' }} border border-gray-200 rounded-md flex justify-center items-center text-gray-500 p-1.5">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+                                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" />
+                                                                </svg>
+                                                            </span>
+                                                        @endif
                                                         <div class="ml-4">
                                                             <div class="font-medium text-gray-700">{{ $tenant->name }}</div>
                                                             <div class="text-gray-500">{{ $tenant->email }}</div>
