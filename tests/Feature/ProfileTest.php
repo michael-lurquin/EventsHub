@@ -57,7 +57,7 @@ class ProfileTest extends TestCase
             'photo_url' => $file,
         ];
 
-        $response = $this->put(route('admin.profile.update.details'), $data);
+        $response = $this->post(route('admin.profile.update.details'), $data);
 
         $response->assertRedirect(route('admin.profile.details'));
 
@@ -105,7 +105,7 @@ class ProfileTest extends TestCase
             ],
         ];
 
-        $response = $this->put(route('admin.profile.update.company'), $data);
+        $response = $this->post(route('admin.profile.update.company'), $data);
 
         $response->assertRedirect(route('admin.profile.company'));
 
@@ -138,7 +138,7 @@ class ProfileTest extends TestCase
     {
         $currentPassword = $this->tenant->owner->password;
 
-        $response = $this->put(route('admin.profile.update.password'), [
+        $response = $this->post(route('admin.profile.update.password'), [
             'current_password' => 'password',
             'password' => 'new-password',
             'password_confirmation' => 'new-password',

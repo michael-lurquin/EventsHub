@@ -128,7 +128,7 @@ class TenantTest extends TestCase
             'user_id' => $user->id,
         ]);
 
-        $this->repository->deleteForce($this->tenant);
+        $this->repository->forceDelete($this->tenant);
 
         $this->assertDatabaseMissing('tenant_user', [
             'tenant_id' => $this->tenant->id,

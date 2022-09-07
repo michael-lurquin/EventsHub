@@ -102,7 +102,7 @@ class TenantController extends Controller
         }
         else
         {
-            return redirect()->route('admin.tenants.index', ['tenant' => $tenant, 'currentTab' => 'all'])->with('success', "Tenant \"{$tenant->name}\" updated!");
+            return redirect()->route('admin.tenants.index', ['currentTab' => 'all'])->with('success', "Tenant \"{$tenant->name}\" updated!");
         }
     }
 
@@ -127,7 +127,7 @@ class TenantController extends Controller
     {
         $this->tenantRepository->delete($tenant);
 
-        return redirect()->route('admin.tenants.index', ['tenant' => $tenant, 'currentTab' => 'all'])->with('success', "Tenant \"{$tenant->name}\" deleted!");
+        return redirect()->route('admin.tenants.index', ['currentTab' => 'all'])->with('success', "Tenant \"{$tenant->name}\" deleted!");
     }
 
     /**
@@ -140,7 +140,7 @@ class TenantController extends Controller
     {
         $this->tenantRepository->restore($tenant);
 
-        return redirect()->route('admin.tenants.index', ['tenant' => $tenant, 'currentTab' => 'all'])->with('success', "Tenant \"{$tenant->name}\" restored!");
+        return redirect()->route('admin.tenants.index', ['currentTab' => 'all'])->with('success', "Tenant \"{$tenant->name}\" restored!");
     }
 
     /**
@@ -153,6 +153,6 @@ class TenantController extends Controller
     {
         $this->tenantRepository->forceDelete($tenant);
 
-        return redirect()->route('admin.tenants.index', ['tenant' => $tenant, 'currentTab' => 'all'])->with('success', "Tenant \"{$tenant->name}\" deleted definitly!");
+        return redirect()->route('admin.tenants.index', ['currentTab' => 'all'])->with('success', "Tenant \"{$tenant->name}\" deleted definitly!");
     }
 }

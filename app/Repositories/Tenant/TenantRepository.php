@@ -10,19 +10,19 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class TenantRepository
 {
-    public function getAll() : LengthAwarePaginator
+    public function getAll(int $perPage = 10) : LengthAwarePaginator
     {
-        return Tenant::with('owner')->withCount('users')->where('ends_at', '>=', now())->orWhere('ends_at', null)->orderByDesc('created_at')->paginate(10, ['*'], 'all');
+        return Tenant::with('owner')->withCount('users')->where('ends_at', '>=', now())->orWhere('ends_at', null)->orderByDesc('created_at')->paginate($perPage, ['*'], 'all');
     }
 
-    public function getAllExpired() : LengthAwarePaginator
+    public function getAllExpired(int $perPage = 10) : LengthAwarePaginator
     {
-        return Tenant::with('owner')->withCount('users')->where('ends_at', '<=', now())->orderByDesc('created_at')->paginate(10, ['*'], 'expired');
+        return Tenant::with('owner')->withCount('users')->where('ends_at', '<=', now())->orderByDesc('created_at')->paginate($perPage, ['*'], 'expired');
     }
 
-    public function getAllTrashed() : LengthAwarePaginator
+    public function getAllTrashed(int $perPage = 10) : LengthAwarePaginator
     {
-        return Tenant::onlyTrashed()->with('owner')->withCount('users')->orderByDesc('created_at')->paginate(10, ['*'], 'trash');
+        return Tenant::onlyTrashed()->with('owner')->withCount('users')->orderByDesc('created_at')->paginate($perPage, ['*'], 'trash');
     }
 
     public function create(array $data, bool $notification = false) : Tenant
