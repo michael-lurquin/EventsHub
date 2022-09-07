@@ -29,7 +29,8 @@
                                                 >
                                             </th>
                                             <th scope="col" class="py-3.5 pl-3 pr-3 text-left text-xs text-gray-500 uppercase tracking-wider">Name</th>
-                                            <th scope="col" class="px-3 py-3.5 text-left text-xs text-gray-500 uppercase tracking-wider">Creation</th>
+                                            <th scope="col" class="py-3.5 pl-3 pr-3 text-center text-xs text-gray-500 uppercase tracking-wider">Tenants</th>
+                                            <th scope="col" class="px-3 py-3.5 text-right text-xs text-gray-500 uppercase tracking-wider">Creation</th>
                                             <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
                                                 <span class="sr-only">Actions</span>
                                             </th>
@@ -59,7 +60,8 @@
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td class="whitespace-nowrap px-3 py-4 text-sm text-left text-gray-500">{{ $user->created_at->format('d/m/Y H:i') }}</td>
+                                                <td class="whitespace-nowrap px-3 py-4 text-sm text-center text-gray-500">{{ $user->tenants_count }}</td>
+                                                <td class="whitespace-nowrap px-3 py-4 text-sm text-right text-gray-500">{{ $user->created_at->format('d/m/Y H:i') }}</td>
                                                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 space-x-2">
                                                     @if ( $user->trashed() )
                                                         <a href="{{ route('admin.users.restore', $user) }}" class="text-yellow-600 hover:text-yellow-900">Restore<span class="sr-only">, {{ $user->fullname }}</span></a>
@@ -82,7 +84,7 @@
                 @if ( $currentTab === 'all' )
                     <div class="text-center bg-white px-4 py-5 sm:px-6 shadow rounded-lg mt-2">
                         <svg class="mx-auto h-24 w-24 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
                         </svg>
                         <h3 class="mt-2 text-sm font-medium text-gray-700">No users</h3>
                         <p class="mt-1 text-sm text-gray-500">Get started by creating a new user.</p>
@@ -94,13 +96,6 @@
                                 New User
                             </a>
                         </div>
-                    </div>
-                @elseif ( $currentTab === 'expired' )
-                    <div class="text-center bg-white px-4 py-5 sm:px-6 shadow rounded-lg mt-2">
-                        <svg class="mx-auto h-24 w-24 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        <h3 class="mt-2 text-sm font-medium text-gray-500">No users expired</h3>
                     </div>
                 @elseif ( $currentTab === 'trash' )
                     <div class="text-center bg-white px-4 py-5 sm:px-6 shadow rounded-lg mt-2">

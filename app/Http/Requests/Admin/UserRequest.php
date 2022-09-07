@@ -28,6 +28,7 @@ class UserRequest extends FormRequest
             'last_name' => 'required|string|max:255',
             'first_name' => 'required|string|max:255',
             'photo_url' => 'nullable|image|mimes:png,jpg|max:5120',
+            'tenant_id' => 'nullable|exists:tenants,id',
         ];
     
         if ( $this->getMethod() === 'POST' )

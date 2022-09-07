@@ -2,11 +2,12 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\User;
+use App\Models\Tenant;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class UserTest extends TestCase
 {
@@ -192,5 +193,39 @@ class UserTest extends TestCase
 
         $response->assertSessionHas('success', "User \"{$user->fullname}\" deleted definitly!");
         $response->assertRedirect(route('admin.users.index', ['currentTab' => 'all']));
+    }
+
+    /**
+     * Owner created from Tenant form
+     */
+    public function testOwnerCreatedFromTenant()
+    {
+        $tenant = Tenant::factory()->create();
+
+        $response = $this->post(route('admin.users.store'), [
+            'first_name' => 'John',
+            'last_name' => 'Doe',
+            'email' => 'john.doe@company.com',
+            'tenant_id' => $tenant->id,
+        ]);
+
+        $this->assertDatabaseCount('users', 3); // User auth, user created by tenant factory and new owner
+
+        $user = User::whereEmail('john.doe@company.com')->firstOrFail();
+
+        $this->assertDatabaseHas('users', [
+            'id' => $user->id,
+            'current_tenant_id' => $tenant->id,
+        ]);
+
+        $this->assertDatabaseHas('tenants', [
+            'id' => $tenant->id,
+            'owner_id' => $user->id,
+        ]);
+
+        $this->assertCount(1, $tenant->users);
+
+        $response->assertSessionHas('success', "Tenant \"{$tenant->name}\" created!");
+        $response->assertRedirect(route('admin.tenants.index', ['currentTab' => 'all']));
     }
 }

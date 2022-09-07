@@ -23,6 +23,10 @@
             @includeWhen($errors->isNotEmpty() || session('success'), 'admin.layouts.flash')
             <div class="space-y-6 bg-white px-4 py-5 sm:p-6">
                 <div class="grid grid-cols-6 gap-6">
+                    @if ( empty($user) && $hasTenant )
+                        <input type="hidden" name="tenant_id" value="{{ $hasTenant }}">
+                    @endif
+
                     <div class="col-span-6 sm:col-span-3">
                         @includeIf('admin.components.form.input', [
                             'type' => 'text',

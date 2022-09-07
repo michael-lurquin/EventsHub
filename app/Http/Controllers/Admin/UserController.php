@@ -8,14 +8,17 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UserRequest;
 use App\Repositories\User\UserRepository;
+use App\Repositories\Tenant\TenantRepository;
 
 class UserController extends Controller
 {
     private UserRepository $repository;
+    private TenantRepository $tenantRepository;
 
-    public function __construct(UserRepository $userRepository)
+    public function __construct(UserRepository $userRepository, TenantRepository $tenantRepository)
     {
         $this->userRepository = $userRepository;
+        $this->tenantRepository = $tenantRepository;
     }
 
     /**
@@ -40,11 +43,9 @@ class UserController extends Controller
      */
     public function create(Request $request)
     {
-        $fromTenant = $request->has('tenant_id');
-        
-        // Tenant::findOrFail($request->get('tenant_id'));
+        $hasTenant = $request->get('tenant_id');
 
-        return view('admin.users.create');
+        return view('admin.users.create', compact('hasTenant'));
     }
 
     /**
@@ -58,6 +59,17 @@ class UserController extends Controller
         $user = $this->userRepository->create($request->validated());
 
         if ( $request->hasFile('photo_url') ) $this->userRepository->updatePhoto($user, $request->file('photo_url'));
+
+        if ( $request->has('tenant_id') && !empty($request->get('tenant_id')) )
+        {
+            $tenant = Tenant::findOrFail($request->get('tenant_id'));
+
+            $this->userRepository->changeTenant($user, $tenant);
+            $this->tenantRepository->updateOwner($tenant, $user->id);
+            $this->tenantRepository->addUser($tenant, $user);
+
+            return redirect()->route('admin.tenants.index', ['currentTab' => 'all'])->with('success', "Tenant \"{$tenant->name}\" created!");
+        }
 
         return redirect()->route('admin.users.index', ['currentTab' => 'all'])->with('success', "User \"{$user->fullname}\" created!");
     }

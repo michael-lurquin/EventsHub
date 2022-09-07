@@ -94,6 +94,8 @@ class TenantTest extends TestCase
 
         $tenant = Tenant::whereSubdomain($data['subdomain'])->firstOrFail();
 
+        $this->assertCount(1, $tenant->users);
+
         $response->assertSessionHas('success', "Tenant \"{$tenant->name}\" created!");
         $response->assertRedirect(route('admin.tenants.edit', ['tenant' => $tenant, 'currentTab' => 'address']));
     }

@@ -32,7 +32,7 @@
                                             <th scope="col" class="px-3 py-3.5 text-left text-xs text-gray-500 uppercase tracking-wider">Owner</th>
                                             <th scope="col" class="px-3 py-3.5 text-right text-xs text-gray-500 uppercase tracking-wider">Ends at</th>
                                             <th scope="col" class="px-3 py-3.5 text-center text-xs text-gray-500 uppercase tracking-wider">Users</th>
-                                            <th scope="col" class="px-3 py-3.5 text-left text-xs text-gray-500 uppercase tracking-wider">Creation</th>
+                                            <th scope="col" class="px-3 py-3.5 text-right text-xs text-gray-500 uppercase tracking-wider">Creation</th>
                                             <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
                                                 <span class="sr-only">Actions</span>
                                             </th>
@@ -80,7 +80,7 @@
                                                     </div>
                                                 </td>
                                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-center text-gray-500">{{ $tenant->users_count }}</td>
-                                                <td class="whitespace-nowrap px-3 py-4 text-sm text-left text-gray-500">{{ $tenant->created_at->format('d/m/Y H:i') }}</td>
+                                                <td class="whitespace-nowrap px-3 py-4 text-sm text-right text-gray-500">{{ $tenant->created_at->format('d/m/Y H:i') }}</td>
                                                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 space-x-2">
                                                     @if ( $tenant->trashed() )
                                                         <a href="{{ route('admin.tenants.restore', $tenant) }}" class="text-yellow-600 hover:text-yellow-900">Restore<span class="sr-only">, {{ $tenant->name }}</span></a>

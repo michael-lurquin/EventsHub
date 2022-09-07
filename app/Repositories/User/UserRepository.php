@@ -13,12 +13,12 @@ class UserRepository
 {
     public function getAll(int $perPage = 10) : LengthAwarePaginator
     {
-        return User::orderByDesc('created_at')->paginate($perPage, ['*'], 'all');
+        return User::withCount('tenants')->orderByDesc('created_at')->paginate($perPage, ['*'], 'all');
     }
 
     public function getAllTrashed(int $perPage = 10) : LengthAwarePaginator
     {
-        return User::onlyTrashed()->orderByDesc('created_at')->paginate($perPage, ['*'], 'trash');
+        return User::withCount('tenants')->onlyTrashed()->orderByDesc('created_at')->paginate($perPage, ['*'], 'trash');
     }
 
     public function create(array $data, bool $notification = false) : User

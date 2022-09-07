@@ -64,6 +64,8 @@ class TenantController extends Controller
     {
         $tenant = $this->tenantRepository->create($request->validated());
 
+        $this->tenantRepository->addUser($tenant, auth()->user());
+
         return redirect()->route('admin.tenants.edit', ['tenant' => $tenant, 'currentTab' => 'address'])->with('success', "Tenant \"{$tenant->name}\" created!");
     }
 
