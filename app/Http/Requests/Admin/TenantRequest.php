@@ -26,7 +26,23 @@ class TenantRequest extends FormRequest
     {
         $rules = [];
 
-        if ( $this->currentTab === 'main' )
+        if ( $this->currentTab === 'address' )
+        {
+            $rules = [
+                'street' => 'nullable|string|max:500',
+                'post_code' => 'nullable|string|max:10',
+                'city' => 'nullable|string|max:60',
+                'state' => 'nullable|string|max:60',
+                'country_code' => 'nullable|string|size:3',
+            ];
+        }
+        else if ( $this->currentTab === 'owner' )
+        {
+            $rules = [
+                'owner_id' => 'required|exists:users,id',
+            ];
+        }
+        else
         {
             $rules = [
                 'name' => 'required|string|max:255',
@@ -55,22 +71,6 @@ class TenantRequest extends FormRequest
                     Rule::unique('tenants')->ignore($this->tenant->id),
                 ];
             }
-        }
-        else if ( $this->currentTab === 'address' )
-        {
-            $rules = [
-                'street' => 'nullable|string|max:500',
-                'post_code' => 'nullable|string|max:10',
-                'city' => 'nullable|string|max:60',
-                'state' => 'nullable|string|max:60',
-                'country_code' => 'nullable|string|size:3',
-            ];
-        }
-        else if ( $this->currentTab === 'owner' )
-        {
-            $rules = [
-                'owner_id' => 'required|exists:users,id',
-            ];
         }
 
         return $rules;

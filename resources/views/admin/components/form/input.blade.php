@@ -79,7 +79,7 @@
             <span class="inline-flex items-center rounded-r-md border border-l-0 border-gray-300 bg-gray-50 px-3 text-gray-500 sm:text-sm select-none">{{ $suffix }}</span>
         @elseif ( !empty($rightIcon) )
             <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke="currentColor" aria-hidden="true">
                     {!! $rightIcon !!}
                 </svg>
             </div>

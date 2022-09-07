@@ -4,57 +4,69 @@
         <div class="mt-3 flex md:absolute md:top-3 md:right-0 md:mt-0">
            <a 
                 href="{{ route('admin.tenants.index', ['currentTab' => 'all']) }}" 
-                class="inline-flex items-center rounded-md border px-4 py-2 text-sm font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:ring-indigo-500"
+                class="inline-flex items-center rounded-md border px-4 py-2 text-sm font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 border-gray-300 bg-white text-gray-600 hover:bg-gray-50 focus:ring-indigo-500"
             >Cancel</a>
 
-            @php $currentPositionTab = array_search($currentTab, $tabs) @endphp
-            @if ( $currentPositionTab === 0 )
-                <button
-                    type="submit"
-                    class="ml-3 inline-flex items-center rounded-md border px-4 py-2 text-sm font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 border-transparent bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-indigo-500"
-                >
-                    Next
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="ml-2 -mr-1 h-5 w-5">
-                        <path fill-rule="evenodd" d="M16.28 11.47a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 01-1.06-1.06L14.69 12 7.72 5.03a.75.75 0 011.06-1.06l7.5 7.5z" clip-rule="evenodd" />
-                    </svg>
-                </button>
-            @elseif ( $currentPositionTab < count($tabs) - 1 )
-                <a
-                    href="{{ route('admin.tenants.edit', ['tenant' => $tenant, 'currentTab' => $tabs[$currentPositionTab - 1]]) }}"
-                    class="ml-3 inline-flex items-center rounded-md border px-4 py-2 text-sm font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 border-transparent bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-indigo-500"
-                >
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="-ml-1 mr-2 h-5 w-5">
-                        <path fill-rule="evenodd" d="M7.72 12.53a.75.75 0 010-1.06l7.5-7.5a.75.75 0 111.06 1.06L9.31 12l6.97 6.97a.75.75 0 11-1.06 1.06l-7.5-7.5z" clip-rule="evenodd" />
-                    </svg>
-                    Previous
-                </a>
-                <button
-                    type="submit"
-                    class="ml-3 inline-flex items-center rounded-md border px-4 py-2 text-sm font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 border-transparent bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-indigo-500"
-                >
-                    Next
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="ml-2 -mr-1 h-5 w-5">
-                        <path fill-rule="evenodd" d="M16.28 11.47a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 01-1.06-1.06L14.69 12 7.72 5.03a.75.75 0 011.06-1.06l7.5 7.5z" clip-rule="evenodd" />
-                    </svg>
-                </button>
+            @if ( !empty($tenant) && $currentTab )
+                @php $currentPositionTab = array_search($currentTab, $tabs) @endphp
+                @if ( $currentPositionTab === 0 )
+                    <button
+                        type="submit"
+                        class="ml-3 inline-flex items-center rounded-md border px-4 py-2 text-sm font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 border-transparent bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-indigo-500"
+                    >
+                        Next
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="ml-2 -mr-1 h-5 w-5">
+                            <path fill-rule="evenodd" d="M16.28 11.47a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 01-1.06-1.06L14.69 12 7.72 5.03a.75.75 0 011.06-1.06l7.5 7.5z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                @elseif ( $currentPositionTab < count($tabs) - 1 )
+                    <a
+                        href="{{ route('admin.tenants.edit', ['tenant' => $tenant, 'currentTab' => $tabs[$currentPositionTab - 1]]) }}"
+                        class="ml-3 inline-flex items-center rounded-md border px-4 py-2 text-sm font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 border-transparent bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-indigo-500"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="-ml-1 mr-2 h-5 w-5">
+                            <path fill-rule="evenodd" d="M7.72 12.53a.75.75 0 010-1.06l7.5-7.5a.75.75 0 111.06 1.06L9.31 12l6.97 6.97a.75.75 0 11-1.06 1.06l-7.5-7.5z" clip-rule="evenodd" />
+                        </svg>
+                        Previous
+                    </a>
+                    <button
+                        type="submit"
+                        class="ml-3 inline-flex items-center rounded-md border px-4 py-2 text-sm font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 border-transparent bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-indigo-500"
+                    >
+                        Next
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="ml-2 -mr-1 h-5 w-5">
+                            <path fill-rule="evenodd" d="M16.28 11.47a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 01-1.06-1.06L14.69 12 7.72 5.03a.75.75 0 011.06-1.06l7.5 7.5z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                @else
+                    <a
+                        href="{{ route('admin.tenants.edit', ['tenant' => $tenant, 'currentTab' => $tabs[$currentPositionTab - 1]]) }}"
+                        class="ml-3 inline-flex items-center rounded-md border px-4 py-2 text-sm font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 border-transparent bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-indigo-500"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="-ml-1 mr-2 h-5 w-5">
+                            <path fill-rule="evenodd" d="M7.72 12.53a.75.75 0 010-1.06l7.5-7.5a.75.75 0 111.06 1.06L9.31 12l6.97 6.97a.75.75 0 11-1.06 1.06l-7.5-7.5z" clip-rule="evenodd" />
+                        </svg>
+                        Previous
+                    </a>
+                    <button
+                        type="submit"
+                        class="ml-3 inline-flex items-center rounded-md border px-4 py-2 text-sm font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 border-transparent bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-indigo-500"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="-ml-1 mr-2 h-5 w-5">
+                            <path fill-rule="evenodd" d="M19.916 4.626a.75.75 0 01.208 1.04l-9 13.5a.75.75 0 01-1.154.114l-6-6a.75.75 0 011.06-1.06l5.353 5.353 8.493-12.739a.75.75 0 011.04-.208z" clip-rule="evenodd" />
+                        </svg>
+                        Save
+                    </button>
+                @endif
             @else
-                <a
-                    href="{{ route('admin.tenants.edit', ['tenant' => $tenant, 'currentTab' => $tabs[$currentPositionTab - 1]]) }}"
-                    class="ml-3 inline-flex items-center rounded-md border px-4 py-2 text-sm font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 border-transparent bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-indigo-500"
-                >
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="-ml-1 mr-2 h-5 w-5">
-                        <path fill-rule="evenodd" d="M7.72 12.53a.75.75 0 010-1.06l7.5-7.5a.75.75 0 111.06 1.06L9.31 12l6.97 6.97a.75.75 0 11-1.06 1.06l-7.5-7.5z" clip-rule="evenodd" />
-                    </svg>
-                    Previous
-                </a>
                 <button
                     type="submit"
                     class="ml-3 inline-flex items-center rounded-md border px-4 py-2 text-sm font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 border-transparent bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-indigo-500"
                 >
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="-ml-1 mr-2 h-5 w-5">
-                        <path fill-rule="evenodd" d="M19.916 4.626a.75.75 0 01.208 1.04l-9 13.5a.75.75 0 01-1.154.114l-6-6a.75.75 0 011.06-1.06l5.353 5.353 8.493-12.739a.75.75 0 011.04-.208z" clip-rule="evenodd" />
+                    Next
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="ml-2 -mr-1 h-5 w-5">
+                        <path fill-rule="evenodd" d="M16.28 11.47a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 01-1.06-1.06L14.69 12 7.72 5.03a.75.75 0 011.06-1.06l7.5 7.5z" clip-rule="evenodd" />
                     </svg>
-                    Save
                 </button>
             @endif
         </div>

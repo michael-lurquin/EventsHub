@@ -4,7 +4,7 @@
         <div class="mt-3 flex md:absolute md:top-3 md:right-0 md:mt-0">
             <a 
                 href="{{ route('admin.dashboard') }}" 
-                class="inline-flex items-center rounded-md border px-4 py-2 text-sm font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:ring-indigo-500"
+                class="inline-flex items-center rounded-md border px-4 py-2 text-sm font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 border-gray-300 bg-white text-gray-600 hover:bg-gray-50 focus:ring-indigo-500"
             >Cancel</a>
             <button
                 type="submit"
