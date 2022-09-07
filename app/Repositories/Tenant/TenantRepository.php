@@ -12,7 +12,17 @@ class TenantRepository
 {
     public function getAll() : LengthAwarePaginator
     {
-        return Tenant::with('owner')->withCount('users')->orderByDesc('created_at')->paginate(10);
+        return Tenant::with('owner')->withCount('users')->where('ends_at', '>=', now())->orWhere('ends_at', null)->orderByDesc('created_at')->paginate(10, ['*'], 'all');
+    }
+
+    public function getAllExpired() : LengthAwarePaginator
+    {
+        return Tenant::with('owner')->withCount('users')->where('ends_at', '<=', now())->orderByDesc('created_at')->paginate(10, ['*'], 'expired');
+    }
+
+    public function getAllTrashed() : LengthAwarePaginator
+    {
+        return Tenant::onlyTrashed()->with('owner')->withCount('users')->orderByDesc('created_at')->paginate(10, ['*'], 'trash');
     }
 
     public function create(array $data, bool $notification = false) : Tenant
@@ -59,28 +69,33 @@ class TenantRepository
         $tenant->restore();
     }
 
-    public function addUser(Tenant $tenant, User $user)
+    public function addUser(Tenant $tenant, User $user) : void
     {
         $tenant->users()->attach($user);
     }
 
-    public function removeUser(Tenant $tenant, User $user)
+    public function removeUser(Tenant $tenant, User $user) : void
     {
         $tenant->users()->detach($user);
     }
 
-    public function sendInvitation(Tenant $tenant)
+    public function sendInvitation(Tenant $tenant) : void
     {
         // $url = URL::signedRoute('tenants.invitation', $tenant);
 
         $tenant->notify(new TenantInvitation($tenant, 'fake-url'));
     }
 
-    public function updateAddress(Tenant $tenant, array $data)
+    public function updateAddress(Tenant $tenant, array $data) : void
     {
         $tenant->address()->updateOrCreate([
             'addressable_id' => $tenant->id,
             'addressable_type' => Tenant::class,
         ], $data);
+    }
+
+    public function updateOwner(Tenant $tenant, int $ownerId) : void
+    {
+        $tenant->update(['owner_id' => $ownerId]);
     }
 }

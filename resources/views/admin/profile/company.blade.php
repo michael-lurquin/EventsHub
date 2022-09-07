@@ -3,7 +3,7 @@
 @section('title', 'Profile')
 
 @section('content')
-    {!! Form::model($tenant, ['route' => 'admin.profile.update.company', 'method' => 'PUT', 'files' => true]) !!}
+    {!! Form::model($tenant, ['route' => 'admin.profile.update.company', 'files' => true]) !!}
         <aside>
             @includeIf('admin.profile.tabs')
 
@@ -69,6 +69,7 @@
                             'fieldname' => 'logo_url',
                             'label' => 'Logo',
                             'file' => auth()->user()->currentTenant->logo_url,
+                            'optional' => true,
                         ])
 
                         <div class="grid grid-cols-6 gap-6">
@@ -115,7 +116,7 @@
                                 @includeIf('admin.components.form.select', [
                                     'fieldname' => 'address[country_code]',
                                     'label' => 'Country',
-                                    'values' => $countries,
+                                    'values' => listOfCountries(),
                                     'optional' => true,
                                 ])
                             </div>

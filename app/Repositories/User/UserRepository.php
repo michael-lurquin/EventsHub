@@ -65,10 +65,15 @@ class UserRepository
         ]);
     }
 
-    public function changePassword(User $user, string $password)
+    public function changePassword(User $user, string $password) : void
     {
         $user->update([
             'password' => Hash::make($password),
         ]);
+    }
+
+    public function getOwners() : array
+    {
+        return User::orderBy('first_name')->orderBy('last_name')->get()->pluck('fullname', 'id')->toArray();
     }
 }

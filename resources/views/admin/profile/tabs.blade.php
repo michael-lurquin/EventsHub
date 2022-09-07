@@ -1,4 +1,4 @@
-<div class="relative border-b border-gray-200 pb-5 sm:pb-0">
+<div class="relative border-b border-gray-200 pb-5 sm:pb-0 mb-2">
     <div class="md:flex md:items-center md:justify-between px-4 md:px-0">
         <h2 class="text-2xl font-bold leading-7 text-gray-800 sm:truncate sm:text-3xl sm:tracking-tight">@yield('title')</h2>
         <div class="mt-3 flex md:absolute md:top-3 md:right-0 md:mt-0">

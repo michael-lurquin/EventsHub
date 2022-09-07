@@ -3,7 +3,7 @@
 @section('title', 'Profile')
 
 @section('content')
-    {!! Form::model($user, ['route' => 'admin.profile.update.details', 'method' => 'PUT', 'files' => true]) !!}
+    {!! Form::model($user, ['route' => 'admin.profile.update.details', 'files' => true]) !!}
         <aside>
             @includeIf('admin.profile.tabs')
 

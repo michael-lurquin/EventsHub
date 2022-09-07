@@ -41,7 +41,6 @@ class ProfileController extends Controller
         return view('admin.profile.company')->with([
             'user' => auth()->user(),
             'tenant' => auth()->user()->currentTenant,
-            'countries' => listOfCountries(),
         ]);
     }
 

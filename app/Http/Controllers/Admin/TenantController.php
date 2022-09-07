@@ -7,14 +7,26 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\TenantRequest;
 use App\Repositories\Tenant\TenantRepository;
+use App\Repositories\User\UserRepository;
 
 class TenantController extends Controller
 {
-    private TenantRepository $repository;
+    private TenantRepository $tenantRepository;
+    private UserRepository $userRepository;
 
-    public function __construct(TenantRepository $repository)
+    public function __construct(TenantRepository $tenantRepository, UserRepository $userRepository)
     {
-        $this->repository = $repository;
+        $this->tenantRepository = $tenantRepository;
+        $this->userRepository = $userRepository;
+    }
+
+    private function getTabs() : array
+    {
+        return [
+            'main',
+            'address',
+            'owner'
+        ];
     }
 
     /**
@@ -22,11 +34,15 @@ class TenantController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(string $currentTab = 'all')
     {
-        $tenants = $this->repository->getAll();
+        $tenants = [
+            'all' => $this->tenantRepository->getAll(),
+            'expired' => $this->tenantRepository->getAllExpired(),
+            'trash' => $this->tenantRepository->getAllTrashed(),
+        ];
 
-        return view('admin.tenants.index', compact('tenants'));
+        return view('admin.tenants.index', compact('tenants', 'tenants', 'currentTab'));
     }
 
     /**
@@ -47,20 +63,9 @@ class TenantController extends Controller
      */
     public function store(TenantRequest $request)
     {
-        $tenant = $this->repository->create($request->validated(), false);
+        $tenant = $this->tenantRepository->create($request->validated(), false);
 
-        return redirect()->route('admin.tenants.index')->with('success', "Tenant \"{$tenant->name}\" created!");
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Tenant  $tenant
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Tenant $tenant)
-    {
-        dd($tenant);
+        return redirect()->route('admin.tenants.edit', $tenant)->with('success', "Tenant \"{$tenant->name}\" created!");
     }
 
     /**
@@ -69,11 +74,12 @@ class TenantController extends Controller
      * @param  \App\Models\Tenant  $tenant
      * @return \Illuminate\Http\Response
      */
-    public function edit(Tenant $tenant)
+    public function edit(Tenant $tenant, string $currentTab = 'main')
     {
-        dd($tenant);
-
-        return view('admin.tenants.edit', compact('tenant'));
+        return view('admin.tenants.edit', compact('tenant', 'currentTab'))->with([
+            'tabs' => $this->getTabs(),
+            'owners' => $this->userRepository->getOwners(),
+        ]);
     }
 
     /**
@@ -83,9 +89,22 @@ class TenantController extends Controller
      * @param  \App\Models\Tenant  $tenant
      * @return \Illuminate\Http\Response
      */
-    public function update(TenantRequest $request, Tenant $tenant)
+    public function update(TenantRequest $request, Tenant $tenant, string $currentTab = 'main')
     {
-        dd($request->all());
+        if ( $currentTab === 'main' ) $this->tenantRepository->update($tenant, $request->validated());
+        else if ( $currentTab === 'address' ) $this->tenantRepository->updateAddress($tenant, $request->validated());
+        else if ( $currentTab === 'owner' ) $this->tenantRepository->updateOwner($tenant, (int) $request->get('owner_id'));
+
+        $nextTab = array_search($currentTab, $this->getTabs());
+
+        if ( $nextTab < count($this->getTabs()) - 1 )
+        {
+            return redirect()->route('admin.tenants.edit', ['tenant' => $tenant, 'currentTab' => $this->getTabs()[$nextTab + 1]]);
+        }
+        else
+        {
+            return redirect()->route('admin.tenants.index', ['tenant' => $tenant, 'currentTab' => 'all'])->with('success', "Tenant \"{$tenant->name}\" updated!");
+        }
     }
 
     /**

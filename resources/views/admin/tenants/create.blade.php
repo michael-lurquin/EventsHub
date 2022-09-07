@@ -2,15 +2,8 @@
 
 @section('title', 'New Tenant')
 
-@php
-    $breadcrumbs = [
-        [
-            'title' => 'Tenants',
-            'link' => route('admin.tenants.index')
-        ]
-    ];
-@endphp
-
 @section('content')
-    
+    {!! Form::open(['route' => 'admin.tenants.store', 'files' => true]) !!}
+        @includeIf('admin.tenants.form.main')
+    {!! Form::close() !!}
 @endsection

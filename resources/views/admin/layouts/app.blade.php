@@ -6,9 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         @if ( !empty($__env->yieldContent('title')) )
-            <title>{{ config('app.name') . ' | ' . $__env->yieldContent('title') }}</title>
+            <title>{!! config('app.name') . ' | ' . $__env->yieldContent('title') !!}</title>
         @else
-            <title>{{ config('app.name') }}</title>
+            <title>{!! config('app.name') !!}</title>
         @endif
 
         @vite(['resources/css/app.css', 'resources/js/app.js'])

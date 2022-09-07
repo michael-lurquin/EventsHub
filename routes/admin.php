@@ -12,11 +12,11 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 
 // Profile
 Route::get('/profile/details', [ProfileController::class, 'details'])->name('profile.details');
-Route::put('/profile/details', [ProfileController::class, 'updateDetails'])->name('profile.update.details');
+Route::post('/profile/details', [ProfileController::class, 'updateDetails'])->name('profile.update.details');
 Route::get('/profile/company', [ProfileController::class, 'company'])->name('profile.company');
-Route::put('/profile/company', [ProfileController::class, 'updateCompany'])->name('profile.update.company');
+Route::post('/profile/company', [ProfileController::class, 'updateCompany'])->name('profile.update.company');
 Route::get('/profile/password', [ProfileController::class, 'password'])->name('profile.password');
-Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.update.password');
+Route::post('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.update.password');
 
 // Bulk-action
 Route::post('/bulk-action/{for}', [DashboardController::class, 'bulkAction'])->name('bulk-action');
@@ -24,7 +24,11 @@ Route::post('/bulk-action/{for}', [DashboardController::class, 'bulkAction'])->n
 // Tenant
 Route::resource('/tenants', TenantController::class)->scoped([
     'tenant' => 'subdomain'
-]);
+])->only(['create', 'store', 'destroy']);
+Route::get('/tenants/tab/{currentTab}', [TenantController::class, 'index'])->name('tenants.index');
+Route::get('/tenants/{tenant}/tab/{currentTab}', [TenantController::class, 'edit'])->name('tenants.edit');
+Route::put('/tenants/{tenant}/tab/{currentTab}', [TenantController::class, 'update'])->name('tenants.update');
+
 
 // User
 Route::resource('/users', UserController::class);

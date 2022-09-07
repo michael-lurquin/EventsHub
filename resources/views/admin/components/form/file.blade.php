@@ -1,5 +1,12 @@
 <div>
-    <label class="block text-sm text-gray-700">{{ $label }}</label>
+    @if ( !empty($optional) && $optional )
+        <div class="flex justify-between">
+            <label for="{{ $fieldname }}" class="block text-sm text-gray-700">{{ $label }}</label>
+            <span class="text-sm text-gray-500" id="{{ $fieldname }}-optional">Optional</span>
+        </div>
+    @else
+        <label for="{{ $fieldname }}" class="block text-sm text-gray-700">{{ $label }}</label>
+    @endif
     <div class="mt-1 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-5 pb-6">
         <div class="space-y-1 text-center">
             @if ( !empty($file) )
