@@ -6,11 +6,10 @@ use Tests\TestCase;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class WelcomeTest extends TestCase
 {
-    use DatabaseMigrations, RefreshDatabase;
+    use RefreshDatabase;
 
     /**
      * See Welcome page

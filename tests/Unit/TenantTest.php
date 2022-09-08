@@ -10,11 +10,10 @@ use App\Notifications\TenantInvitation;
 use Illuminate\Support\Facades\Notification;
 use App\Repositories\Tenant\TenantRepository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class TenantTest extends TestCase
 {
-    use DatabaseMigrations, RefreshDatabase;
+    use RefreshDatabase;
 
     private Tenant $tenant;
     private TenantRepository $repository;

@@ -7,13 +7,11 @@ use App\Models\Tenant;
 use App\Models\Address;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class ProfileTest extends TestCase
 {
-    use DatabaseMigrations, RefreshDatabase;
+    use RefreshDatabase;
 
     private Tenant $tenant;
 

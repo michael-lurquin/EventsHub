@@ -9,11 +9,10 @@ use App\Notifications\UserInvitation;
 use App\Repositories\User\UserRepository;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class UserTest extends TestCase
 {
-    use DatabaseMigrations, RefreshDatabase;
+    use RefreshDatabase;
 
     private User $user;
     private UserRepository $repository;

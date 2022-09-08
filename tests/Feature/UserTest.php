@@ -5,13 +5,11 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Tenant;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class UserTest extends TestCase
 {
-    use DatabaseMigrations, RefreshDatabase;
+    use RefreshDatabase;
 
     private User $auth;
 
