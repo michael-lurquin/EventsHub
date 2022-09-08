@@ -4,12 +4,20 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use App\Models\User;
+use Illuminate\Support\Facades\Config;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class WelcomeTest extends TestCase
 {
     use RefreshDatabase;
+
+    public function setUp() : void
+    {
+        parent::setUp();
+
+        Config::set('app.name', 'EventsHub');
+    }
 
     /**
      * See Welcome page
@@ -19,7 +27,7 @@ class WelcomeTest extends TestCase
         $response = $this->get(route('welcome'));
 
         $response->assertSuccessful();
-        $response->assertSee('EventsHub');
+        $response->assertSee(config('app.name'));
     }
 
     /**
