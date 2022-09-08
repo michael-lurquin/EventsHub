@@ -3,7 +3,7 @@
 @if ( $errors->has($fieldname) )
     @php $class .= ' border-red-300 text-red-900 placeholder-red-500 focus:border-red-500 focus:ring-red-500' @endphp
 @else
-    @php $class .= ' border-gray-300 text-gray-600 placeholder-gray-500 focus:border-indigo-500 focus:ring-indigo-500' @endphp
+    @php $class .= ' border-gray-300 text-gray-600 placeholder-gray-500 focus:border-primary-500 focus:ring-primary-500' @endphp
 @endif
 
 @if ( !empty($disabled) && $disabled )

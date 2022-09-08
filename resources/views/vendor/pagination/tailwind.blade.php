@@ -65,11 +65,11 @@
                                 @if ($page == $paginator->currentPage())
                                     <span aria-current="page">
                                         @if ( $paginator->onFirstPage() )
-                                            <span class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-indigo-600 bg-indigo-50 border border-gray-300 cursor-default leading-5 rounded-l-md">{{ $page }}</span>
+                                            <span class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-primary-600 bg-primary-50 border border-gray-300 cursor-default leading-5 rounded-l-md">{{ $page }}</span>
                                         @elseif ( $paginator->onLastPage() )
-                                            <span class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-indigo-600 bg-indigo-50 border border-gray-300 cursor-default leading-5 rounded-r-md">{{ $page }}</span>
+                                            <span class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-primary-600 bg-primary-50 border border-gray-300 cursor-default leading-5 rounded-r-md">{{ $page }}</span>
                                         @else
-                                            <span class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-indigo-600 bg-indigo-50 border border-gray-300 cursor-default leading-5">{{ $page }}</span>
+                                            <span class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-primary-600 bg-primary-50 border border-gray-300 cursor-default leading-5">{{ $page }}</span>
                                         @endif
                                     </span>
                                 @else

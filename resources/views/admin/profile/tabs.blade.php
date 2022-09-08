@@ -4,11 +4,11 @@
         <div class="mt-3 flex md:absolute md:top-3 md:right-0 md:mt-0">
             <a 
                 href="{{ route('admin.dashboard') }}" 
-                class="inline-flex items-center rounded-md border px-4 py-2 text-sm font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 border-gray-300 bg-white text-gray-600 hover:bg-gray-50 focus:ring-indigo-500"
+                class="inline-flex items-center rounded-md border px-4 py-2 text-sm font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 border-gray-300 bg-white text-gray-600 hover:bg-gray-50 focus:ring-primary-500"
             >Cancel</a>
             <button
                 type="submit"
-                class="ml-3 inline-flex items-center rounded-md border px-4 py-2 text-sm font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 border-transparent bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-indigo-500"
+                class="ml-3 inline-flex items-center rounded-md border px-4 py-2 text-sm font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 border-transparent bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500"
             >Save</button>
         </div>
     </div>
@@ -16,7 +16,7 @@
         <!-- Dropdown menu on small screens -->
         <div class="sm:hidden px-4 md:px-0">
             <label for="current-tab" class="sr-only">Select a tab</label>
-            <select x-model="currentTab" class="block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+            <select x-model="currentTab" class="block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm">
                 <option value="details" selected>My details</option>
                 <option value="company">Company</option>
                 <option value="password">Password</option>
@@ -27,11 +27,11 @@
             <nav class="-mb-px flex space-x-8">
                 <a
                     href="{{ route('admin.profile.details') }}" 
-                    class="group inline-flex items-center whitespace-nowrap pb-4 px-1 border-b-2 font-medium text-sm select-none {{ request()->routeIs('admin.profile.details') ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 cursor-pointer' }}"
+                    class="group inline-flex items-center whitespace-nowrap pb-4 px-1 border-b-2 font-medium text-sm select-none {{ request()->routeIs('admin.profile.details') ? 'border-primary-500 text-primary-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 cursor-pointer' }}"
                     aria-current="page"
                 >
                     <svg 
-                        class="-ml-0.5 mr-2 h-5 w-5 {{ request()->routeIs('admin.profile.details') ? 'text-indigo-500' : 'text-gray-400 group-hover:text-gray-500' }}"
+                        class="-ml-0.5 mr-2 h-5 w-5 {{ request()->routeIs('admin.profile.details') ? 'text-primary-500' : 'text-gray-400 group-hover:text-gray-500' }}"
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 20 20" 
                         fill="currentColor" 
@@ -43,10 +43,10 @@
                 </a>
                 <a
                     href="{{ route('admin.profile.company') }}" 
-                    class="group inline-flex items-center whitespace-nowrap pb-4 px-1 border-b-2 font-medium text-sm select-none {{ request()->routeIs('admin.profile.company') ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 cursor-pointer' }}"
+                    class="group inline-flex items-center whitespace-nowrap pb-4 px-1 border-b-2 font-medium text-sm select-none {{ request()->routeIs('admin.profile.company') ? 'border-primary-500 text-primary-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 cursor-pointer' }}"
                     aria-current="page"
                 >
-                    <svg class="-ml-0.5 mr-2 h-5 w-5 {{ request()->routeIs('admin.profile.company') ? 'text-indigo-500' : 'text-gray-400 group-hover:text-gray-500' }}"
+                    <svg class="-ml-0.5 mr-2 h-5 w-5 {{ request()->routeIs('admin.profile.company') ? 'text-primary-500' : 'text-gray-400 group-hover:text-gray-500' }}"
                         xmlns="http://www.w3.org/2000/svg" 
                         viewBox="0 0 20 20" 
                         fill="currentColor" 
@@ -58,10 +58,10 @@
                 </a>
                 <a
                     href="{{ route('admin.profile.password') }}" 
-                    class="group inline-flex items-center whitespace-nowrap pb-4 px-1 border-b-2 font-medium text-sm select-none {{ request()->routeIs('admin.profile.password') ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 cursor-pointer' }}"
+                    class="group inline-flex items-center whitespace-nowrap pb-4 px-1 border-b-2 font-medium text-sm select-none {{ request()->routeIs('admin.profile.password') ? 'border-primary-500 text-primary-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 cursor-pointer' }}"
                     aria-current="page"
                 >
-                    <svg class="-ml-0.5 mr-2 h-5 w-5 {{ request()->routeIs('admin.profile.password') ? 'text-indigo-500' : 'text-gray-400 group-hover:text-gray-500' }}"
+                    <svg class="-ml-0.5 mr-2 h-5 w-5 {{ request()->routeIs('admin.profile.password') ? 'text-primary-500' : 'text-gray-400 group-hover:text-gray-500' }}"
                         xmlns="http://www.w3.org/2000/svg" 
                         viewBox="0 0 20 20" 
                         fill="currentColor" 

@@ -17,7 +17,7 @@
                 </svg>
             @endif
             <div class="flex text-sm text-gray-600">
-                <label for="{{ $fieldname }}" class="relative cursor-pointer rounded-md bg-white text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:text-indigo-500">
+                <label for="{{ $fieldname }}" class="relative cursor-pointer rounded-md bg-white text-primary-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-primary-500 focus-within:ring-offset-2 hover:text-primary-500">
                     <span>Upload a file</span>
                     {!! Form::file($fieldname, ['id' => $fieldname, 'class' => 'sr-only']) !!}
                 </label>

@@ -4,7 +4,7 @@
         <div class="mt-3 flex md:absolute md:top-3 md:right-0 md:mt-0">
            <a 
                 href="{{ route('admin.tenants.index', ['currentTab' => 'all']) }}" 
-                class="inline-flex items-center rounded-md border px-4 py-2 text-sm font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 border-gray-300 bg-white text-gray-600 hover:bg-gray-50 focus:ring-indigo-500"
+                class="inline-flex items-center rounded-md border px-4 py-2 text-sm font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 border-gray-300 bg-white text-gray-600 hover:bg-gray-50 focus:ring-primary-500"
             >Cancel</a>
 
             @if ( !empty($tenant) && $currentTab )
@@ -12,7 +12,7 @@
                 @if ( $currentPositionTab === 0 )
                     <button
                         type="submit"
-                        class="ml-3 inline-flex items-center rounded-md border px-4 py-2 text-sm font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 border-transparent bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-indigo-500"
+                        class="ml-3 inline-flex items-center rounded-md border px-4 py-2 text-sm font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 border-transparent bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500"
                     >
                         Next
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="ml-2 -mr-1 h-5 w-5">
@@ -22,7 +22,7 @@
                 @elseif ( $currentPositionTab < count($tabs) - 1 )
                     <a
                         href="{{ route('admin.tenants.edit', ['tenant' => $tenant, 'currentTab' => $tabs[$currentPositionTab - 1]]) }}"
-                        class="ml-3 inline-flex items-center rounded-md border px-4 py-2 text-sm font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 border-transparent bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-indigo-500"
+                        class="ml-3 inline-flex items-center rounded-md border px-4 py-2 text-sm font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 border-transparent bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500"
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="-ml-1 mr-2 h-5 w-5">
                             <path fill-rule="evenodd" d="M7.72 12.53a.75.75 0 010-1.06l7.5-7.5a.75.75 0 111.06 1.06L9.31 12l6.97 6.97a.75.75 0 11-1.06 1.06l-7.5-7.5z" clip-rule="evenodd" />
@@ -31,7 +31,7 @@
                     </a>
                     <button
                         type="submit"
-                        class="ml-3 inline-flex items-center rounded-md border px-4 py-2 text-sm font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 border-transparent bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-indigo-500"
+                        class="ml-3 inline-flex items-center rounded-md border px-4 py-2 text-sm font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 border-transparent bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500"
                     >
                         Next
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="ml-2 -mr-1 h-5 w-5">
@@ -41,7 +41,7 @@
                 @else
                     <a
                         href="{{ route('admin.tenants.edit', ['tenant' => $tenant, 'currentTab' => $tabs[$currentPositionTab - 1]]) }}"
-                        class="ml-3 inline-flex items-center rounded-md border px-4 py-2 text-sm font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 border-transparent bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-indigo-500"
+                        class="ml-3 inline-flex items-center rounded-md border px-4 py-2 text-sm font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 border-transparent bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500"
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="-ml-1 mr-2 h-5 w-5">
                             <path fill-rule="evenodd" d="M7.72 12.53a.75.75 0 010-1.06l7.5-7.5a.75.75 0 111.06 1.06L9.31 12l6.97 6.97a.75.75 0 11-1.06 1.06l-7.5-7.5z" clip-rule="evenodd" />
@@ -50,7 +50,7 @@
                     </a>
                     <button
                         type="submit"
-                        class="ml-3 inline-flex items-center rounded-md border px-4 py-2 text-sm font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 border-transparent bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-indigo-500"
+                        class="ml-3 inline-flex items-center rounded-md border px-4 py-2 text-sm font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 border-transparent bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500"
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="-ml-1 mr-2 h-5 w-5">
                             <path fill-rule="evenodd" d="M19.916 4.626a.75.75 0 01.208 1.04l-9 13.5a.75.75 0 01-1.154.114l-6-6a.75.75 0 011.06-1.06l5.353 5.353 8.493-12.739a.75.75 0 011.04-.208z" clip-rule="evenodd" />
@@ -61,7 +61,7 @@
             @else
                 <button
                     type="submit"
-                    class="ml-3 inline-flex items-center rounded-md border px-4 py-2 text-sm font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 border-transparent bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-indigo-500"
+                    class="ml-3 inline-flex items-center rounded-md border px-4 py-2 text-sm font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 border-transparent bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500"
                 >
                     Next
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="ml-2 -mr-1 h-5 w-5">
@@ -76,7 +76,7 @@
             <!-- Dropdown menu on small screens -->
             <div class="sm:hidden px-4 md:px-0">
                 <label for="current-tab" class="sr-only">Select a tab</label>
-                <select class="block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                <select class="block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm">
                     <option value="main" selected>Main</option>
                     <option value="address">Address</option>
                     <option value="owner">Owner</option>
@@ -87,10 +87,10 @@
                 <nav class="-mb-px flex space-x-8">
                     <a
                         href="{{ route('admin.tenants.edit', ['tenant' => $tenant, 'currentTab' => 'main']) }}" 
-                        class="group inline-flex items-center whitespace-nowrap pb-4 px-1 border-b-2 font-medium text-sm select-none {{ $currentTab === 'main' ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 cursor-pointer' }}"
+                        class="group inline-flex items-center whitespace-nowrap pb-4 px-1 border-b-2 font-medium text-sm select-none {{ $currentTab === 'main' ? 'border-primary-500 text-primary-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 cursor-pointer' }}"
                         aria-current="page"
                     >
-                        <svg class="-ml-0.5 mr-2 h-5 w-5 {{ $currentTab === 'main' ? 'text-indigo-500' : 'text-gray-400 group-hover:text-gray-500' }}"
+                        <svg class="-ml-0.5 mr-2 h-5 w-5 {{ $currentTab === 'main' ? 'text-primary-500' : 'text-gray-400 group-hover:text-gray-500' }}"
                             xmlns="http://www.w3.org/2000/svg" 
                             viewBox="0 0 24 24" 
                             fill="currentColor" 
@@ -102,10 +102,10 @@
                     </a>
                     <a
                         href="{{ route('admin.tenants.edit', ['tenant' => $tenant, 'currentTab' => 'address']) }}" 
-                        class="group inline-flex items-center whitespace-nowrap pb-4 px-1 border-b-2 font-medium text-sm select-none {{ $currentTab === 'address' ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 cursor-pointer' }}"
+                        class="group inline-flex items-center whitespace-nowrap pb-4 px-1 border-b-2 font-medium text-sm select-none {{ $currentTab === 'address' ? 'border-primary-500 text-primary-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 cursor-pointer' }}"
                         aria-current="page"
                     >
-                        <svg class="-ml-0.5 mr-2 h-5 w-5 {{ $currentTab === 'address' ? 'text-indigo-500' : 'text-gray-400 group-hover:text-gray-500' }}"
+                        <svg class="-ml-0.5 mr-2 h-5 w-5 {{ $currentTab === 'address' ? 'text-primary-500' : 'text-gray-400 group-hover:text-gray-500' }}"
                             xmlns="http://www.w3.org/2000/svg" 
                             viewBox="0 0 24 24" 
                             fill="currentColor" 
@@ -117,10 +117,10 @@
                     </a>
                     <a
                         href="{{ route('admin.tenants.edit', ['tenant' => $tenant, 'currentTab' => 'owner']) }}" 
-                        class="group inline-flex items-center whitespace-nowrap pb-4 px-1 border-b-2 font-medium text-sm select-none {{ $currentTab === 'owner' ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 cursor-pointer' }}"
+                        class="group inline-flex items-center whitespace-nowrap pb-4 px-1 border-b-2 font-medium text-sm select-none {{ $currentTab === 'owner' ? 'border-primary-500 text-primary-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 cursor-pointer' }}"
                         aria-current="page"
                     >
-                        <svg class="-ml-0.5 mr-2 h-5 w-5 {{ $currentTab === 'owner' ? 'text-indigo-500' : 'text-gray-400 group-hover:text-gray-500' }}"
+                        <svg class="-ml-0.5 mr-2 h-5 w-5 {{ $currentTab === 'owner' ? 'text-primary-500' : 'text-gray-400 group-hover:text-gray-500' }}"
                             xmlns="http://www.w3.org/2000/svg" 
                             viewBox="0 0 24 24" 
                             fill="currentColor" 
@@ -136,10 +136,10 @@
             <div class="hidden sm:block">
                 <nav class="-mb-px flex space-x-8">
                     <div
-                        class="group inline-flex items-center whitespace-nowrap pb-4 px-1 border-b-2 font-medium text-sm select-none border-indigo-500 text-indigo-600"
+                        class="group inline-flex items-center whitespace-nowrap pb-4 px-1 border-b-2 font-medium text-sm select-none border-primary-500 text-primary-600"
                         aria-current="page"
                     >
-                        <svg class="-ml-0.5 mr-2 h-5 w-5 text-indigo-500"
+                        <svg class="-ml-0.5 mr-2 h-5 w-5 text-primary-500"
                             xmlns="http://www.w3.org/2000/svg" 
                             viewBox="0 0 24 24" 
                             fill="currentColor" 

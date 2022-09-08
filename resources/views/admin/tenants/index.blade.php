@@ -25,7 +25,7 @@
                                                 <input 
                                                     type="checkbox" 
                                                     x-on:click="selected.length === window.allData.length ? selected = [] : selected = window.allData" 
-                                                    class="absolute left-4 top-1/2 -mt-2 h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 sm:left-6" 
+                                                    class="absolute left-4 top-1/2 -mt-2 h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500 sm:left-6" 
                                                 >
                                             </th>
                                             <th scope="col" class="py-3.5 pl-3 pr-3 text-left text-xs text-gray-500 uppercase tracking-wider">Name</th>
@@ -40,14 +40,14 @@
                                     </thead>
                                     <tbody class="divide-y divide-gray-200 bg-white">
                                         @foreach($tenants[$currentTab] as $tenant)
-                                            <tr :class="selected.includes({{ $tenant->id }}) ? 'bg-indigo-50 hover:bg-indigo-100' : 'even:bg-gray-50 hover:bg-gray-100'">
+                                            <tr :class="selected.length > 0 && selected.includes({{ $tenant->id }}) ? 'bg-primary-50 hover:bg-primary-100' : 'even:bg-gray-50 hover:bg-gray-100'">
                                                 <td class="relative w-12 px-6 sm:w-16 sm:px-8">
-                                                    <div class="absolute inset-y-0 left-0 w-0.5 bg-indigo-600" x-show="selected.includes({{ $tenant->id }})"></div>
+                                                    <div class="absolute inset-y-0 left-0 w-0.5 bg-primary-600" x-show="selected.length > 0 && selected.includes({{ $tenant->id }})"></div>
                                                     <input 
                                                         type="checkbox" 
                                                         value="{{ $tenant->id }}" 
                                                         x-model.number="selected" 
-                                                        class="absolute left-4 top-1/2 -mt-2 h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 sm:left-6" 
+                                                        class="absolute left-4 top-1/2 -mt-2 h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500 sm:left-6" 
                                                         checked="selected.includes({{ $tenant->id }})"
                                                     >
                                                 </td>
@@ -94,7 +94,7 @@
                                                         <a href="{{ route('admin.tenants.restore', $tenant) }}" class="text-yellow-600 hover:text-yellow-900">Restore<span class="sr-only">, {{ $tenant->name }}</span></a>
                                                         <a href="{{ route('admin.tenants.destroy.force', $tenant) }}" class="text-red-600 hover:text-red-900">Delete<span class="sr-only">, {{ $tenant->name }}</span></a>
                                                     @else
-                                                        <a href="{{ route('admin.tenants.edit', ['tenant' => $tenant, 'currentTab' => 'main']) }}" class="text-indigo-600 hover:text-indigo-900">Edit<span class="sr-only">, {{ $tenant->name }}</span></a>
+                                                        <a href="{{ route('admin.tenants.edit', ['tenant' => $tenant, 'currentTab' => 'main']) }}" class="text-primary-600 hover:text-primary-900">Edit<span class="sr-only">, {{ $tenant->name }}</span></a>
                                                         <a href="{{ route('admin.tenants.destroy.confirm', $tenant) }}" class="text-red-600 hover:text-red-900">Delete<span class="sr-only">, {{ $tenant->name }}</span></a>
                                                     @endif
                                                 </td>
@@ -116,7 +116,7 @@
                         <h3 class="mt-2 text-sm font-medium text-gray-700">No tenants</h3>
                         <p class="mt-1 text-sm text-gray-500">Get started by creating a new tenant.</p>
                         <div class="mt-6">
-                            <a href="{{ route('admin.tenants.create') }}" class="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                            <a href="{{ route('admin.tenants.create') }}" class="inline-flex items-center rounded-md border border-transparent bg-primary-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2">
                                 <svg class="-ml-1 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                     <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
                                 </svg>
