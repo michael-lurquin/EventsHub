@@ -4,6 +4,7 @@ namespace App\Repositories\User;
 
 use App\Models\User;
 use App\Models\Tenant;
+use Illuminate\Support\Str;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Hash;
 use App\Notifications\UserInvitation;
@@ -24,6 +25,8 @@ class UserRepository
     public function create(array $data, bool $notification = false) : User
     {
         $data['password'] = Hash::make(!empty($data['password']) ? $data['password'] : 'password');
+
+        $data['remember_token'] = Str::random(10);
 
         $user = User::create($data);
 

@@ -4,6 +4,7 @@ namespace App\Repositories\Tenant;
 
 use App\Models\User;
 use App\Models\Tenant;
+use Illuminate\Support\Str;
 use Illuminate\Http\UploadedFile;
 use App\Notifications\TenantInvitation;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -28,6 +29,7 @@ class TenantRepository
     public function create(array $data, bool $notification = false) : Tenant
     {
         if ( empty($data['owner_id']) ) $data['owner_id'] = auth()->user()->id;
+        // if ( empty($data['subdomain']) ) $data['subdomain'] = Str::slug($data['name']);
 
         $tenant = Tenant::create($data);
 
